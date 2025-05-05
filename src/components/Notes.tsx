@@ -125,13 +125,13 @@ function Notes() {
                   }
                   className="bg-mainBackgroundColor text-white p-2 rounded"
                 />
-                <input
-                  type="text"
+                {/* 将 input 替换为 textarea */}
+                <textarea
                   value={editContent.content}
                   onChange={(e) =>
                     setEditContent({ ...editContent, content: e.target.value })
                   }
-                  className="bg-mainBackgroundColor text-white p-2 rounded"
+                  className="bg-mainBackgroundColor text-white p-2 rounded resize-none min-h-[100px] overflow-auto"
                 />
                 <div className="flex gap-2">
                   <button
@@ -174,7 +174,8 @@ function Notes() {
                     </button>
                   </div>
                 </div>
-                <p className="text-white mb-2 truncate">{note.content}</p>
+                {/* 取消截断 */}
+                <p className="text-white mb-2">{note.content}</p>
                 <div className="text-gray-400 text-sm">
                   <p>创建时间: {new Date(note.createTime).toLocaleString()}</p>
                   <p>更新时间: {new Date(note.updateTime).toLocaleString()}</p>
