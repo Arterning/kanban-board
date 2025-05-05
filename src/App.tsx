@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import KanbanBoard from "./components/KanbanBoard";
 import JsonFormatter from "./components/JsonFormatter";
 import Notes from "./components/Notes";
+import ToolPage from './ToolPage';
 
 function App() {
   return (
@@ -25,7 +26,9 @@ function App() {
         <div className="flex-1">
           <Routes>
             <Route path="/" element={<KanbanBoard />} />
-            <Route path="/tools" element={<JsonFormatter />} />
+            <Route path="/tools" element={<ToolPage />} />
+            <Route path="/code-generator" element={<div>代码生成页面待实现</div>} />
+            <Route path="/json-formatter" element={<JsonFormatter />} />
             <Route path="/notes" element={<Notes />} />
           </Routes>
         </div>
