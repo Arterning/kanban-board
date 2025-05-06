@@ -11,10 +11,11 @@ export type Task = {
   content: string;
 };
 
-export type Note = {
+export interface Note {
   id: string;
   type: string;
   content: string;
   createTime: string;
   updateTime: string;
+  color?: string;
 }

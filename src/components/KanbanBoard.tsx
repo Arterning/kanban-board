@@ -154,7 +154,7 @@ function KanbanBoard() {
       }));
       
       // 模拟API调用延迟
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 10));
       
       // 设置周报内容（这里只是示例，实际应该是API返回的内容）
       setWeeklyReport(`
@@ -306,7 +306,7 @@ ${reportData.find(col => col.title === "Todo")?.tasks.map(task => `- ${task}`).j
       )}
     </div>
   );
-}
+
 
 function createTask(columnId: Id) {
   const newTask: Task = {
@@ -445,6 +445,9 @@ function onDragOver(event: DragOverEvent) {
 function generateId() {
   /* Generate a random number between 0 and 10000 */
   return Math.floor(Math.random() * 10001);
+}
+
+
 }
 
 export default KanbanBoard;

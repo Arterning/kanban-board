@@ -18,6 +18,21 @@ const defaultNotes: Note[] = [
   },
 ];
 
+// 添加随机颜色生成函数
+const getRandomColor = () => {
+  const colors = [
+    'bg-rose-500/20',
+    'bg-blue-500/20',
+    'bg-green-500/20',
+    'bg-purple-500/20',
+    'bg-yellow-500/20',
+    'bg-indigo-500/20',
+    'bg-pink-500/20',
+    'bg-teal-500/20'
+  ];
+  return colors[Math.floor(Math.random() * colors.length)];
+};
+
 function Notes() {
   const [notes, setNotes] = useState<Note[]>(() => {
     const savedNotes = localStorage.getItem("notes");
@@ -44,14 +59,16 @@ function Notes() {
   }, [notes]);
 
   const addNote = () => {
-    if (!newNote.type || !newNote.content) return;
+    if (!newNote.content) return;
 
     const now = new Date().toISOString();
     const note: Note = {
       id: generateId().toString(),
-      ...newNote,
+      type: newNote.type || newNote.content.slice(0, 10),
+      content: newNote.content,
       createTime: now,
       updateTime: now,
+      color: getRandomColor(), // 为每个新便签添加随机颜色
     };
 
     setNotes([note, ...notes]);
@@ -59,14 +76,15 @@ function Notes() {
   };
 
   const updateNote = (id: string) => {
-    if (!editContent.type || !editContent.content) return;
+    if (!editContent.content) return;
 
     setNotes(
       notes.map((note) =>
         note.id === id
           ? {
               ...note,
-              ...editContent,
+              type: editContent.type || editContent.content.slice(0, 10),
+              content: editContent.content,
               updateTime: new Date().toISOString(),
             }
           : note
@@ -112,7 +130,7 @@ function Notes() {
         {currentNotes.map((note) => (
           <div
             key={note.id}
-            className="bg-columnBackgroundColor rounded-lg p-4 break-words"
+            className={`rounded-lg p-4 break-words ${note.color || 'bg-columnBackgroundColor'}`}
           >
             {isEditing === note.id ? (
               // 编辑模式
