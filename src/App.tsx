@@ -4,6 +4,7 @@ import KanbanBoard from "./components/KanbanBoard";
 import JsonFormatter from "./components/JsonFormatter";
 import Notes from "./components/Notes";
 import ToolPage from './ToolPage';
+import CodeGenerator from "./components/CodeGenerator";
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
           <Routes>
             <Route path="/" element={<KanbanBoard />} />
             <Route path="/tools" element={<ToolPage />} />
-            <Route path="/code-generator" element={<div>代码生成页面待实现</div>} />
+            <Route path="/code-generator" element={<CodeGenerator />} />
             <Route path="/json-formatter" element={<JsonFormatter />} />
             <Route path="/notes" element={<Notes />} />
           </Routes>
