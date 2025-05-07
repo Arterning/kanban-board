@@ -14,6 +14,7 @@ export type Task = {
 export interface Note {
   id: string;
   type: string;
+  name: string;
   content: string;
   createTime: string;
   updateTime: string;

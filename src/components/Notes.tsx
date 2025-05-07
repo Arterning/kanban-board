@@ -33,6 +33,14 @@ const getRandomColor = () => {
   return colors[Math.floor(Math.random() * colors.length)];
 };
 
+// 定义便签类型选项
+const noteTypes = [
+  { value: 'text', label: '文本' },
+  { value: 'meeting', label: '会议' },
+  { value: 'code', label: '代码片段' },
+  { value: 'favorite', label: '收藏' }
+] as const;
+
 function Notes() {
   const [notes, setNotes] = useState<Note[]>(() => {
     const savedNotes = localStorage.getItem("notes");
@@ -43,9 +51,9 @@ function Notes() {
   });
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [newNote, setNewNote] = useState({ type: "", content: "" });
+  const [newNote, setNewNote] = useState({ type: "text", name: "", content: "" });
   const [isEditing, setIsEditing] = useState<string | null>(null);
-  const [editContent, setEditContent] = useState({ type: "", content: "" });
+  const [editContent, setEditContent] = useState({ type: "text", name: "", content: "" });
 
   const notesPerPage = 20;
   const totalPages = Math.ceil(notes.length / notesPerPage);
@@ -64,15 +72,16 @@ function Notes() {
     const now = new Date().toISOString();
     const note: Note = {
       id: generateId().toString(),
-      type: newNote.type || newNote.content.slice(0, 10),
+      type: newNote.type,
+      name: newNote.name || newNote.content.slice(0, 10),
       content: newNote.content,
       createTime: now,
       updateTime: now,
-      color: getRandomColor(), // 为每个新便签添加随机颜色
+      color: getRandomColor(),
     };
 
     setNotes([note, ...notes]);
-    setNewNote({ type: "", content: "" });
+    setNewNote({ type: "text", name: "", content: "" });
   };
 
   const updateNote = (id: string) => {
@@ -83,7 +92,8 @@ function Notes() {
         note.id === id
           ? {
               ...note,
-              type: editContent.type || editContent.content.slice(0, 10),
+              type: editContent.type,
+              name: editContent.name || editContent.content.slice(0, 10),
               content: editContent.content,
               updateTime: new Date().toISOString(),
             }
@@ -93,36 +103,44 @@ function Notes() {
     setIsEditing(null);
   };
 
-  const deleteNote = (id: string) => {
-    setNotes(notes.filter((note) => note.id !== id));
-  };
-
   return (
     <div className="container mx-auto p-8">
       <h1 className="text-3xl font-bold mb-6">便签</h1>
       
       {/* 添加便签表单 */}
-      <div className="mb-8 flex gap-4">
-        <input
-          type="text"
-          placeholder="类型"
-          className="bg-columnBackgroundColor text-white p-2 rounded"
-          value={newNote.type}
-          onChange={(e) => setNewNote({ ...newNote, type: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="内容"
-          className="bg-columnBackgroundColor text-white p-2 rounded flex-1"
-          value={newNote.content}
-          onChange={(e) => setNewNote({ ...newNote, content: e.target.value })}
-        />
-        <button
-          onClick={addNote}
-          className="bg-rose-500 text-white px-4 py-2 rounded hover:bg-rose-600"
-        >
-          添加便签
-        </button>
+      <div className="mb-8 flex flex-col gap-4">
+        <div className="flex gap-4">
+          <input
+            type="text"
+            placeholder="标题"
+            className="bg-columnBackgroundColor text-white p-2 rounded flex-1"
+            value={newNote.name}
+            onChange={(e) => setNewNote({ ...newNote, name: e.target.value })}
+          />
+          <select
+            value={newNote.type}
+            onChange={(e) => setNewNote({ ...newNote, type: e.target.value })}
+            className="bg-columnBackgroundColor text-white p-2 rounded min-w-[120px]"
+          >
+            {noteTypes.map(type => (
+              <option key={type.value} value={type.value}>{type.label}</option>
+            ))}
+          </select>
+        </div>
+        <div className="flex gap-4">
+          <textarea
+            placeholder="内容"
+            className="bg-columnBackgroundColor text-white p-2 rounded flex-1 resize-none min-h-[100px] max-h-[200px]"
+            value={newNote.content}
+            onChange={(e) => setNewNote({ ...newNote, content: e.target.value })}
+          />
+          <button
+            onClick={addNote}
+            className="bg-rose-500 text-white px-4 py-2 rounded hover:bg-rose-600 h-fit"
+          >
+            添加便签
+          </button>
+        </div>
       </div>
 
       {/* 便签列表 */}
@@ -135,21 +153,34 @@ function Notes() {
             {isEditing === note.id ? (
               // 编辑模式
               <div className="flex flex-col gap-2">
-                <input
-                  type="text"
-                  value={editContent.type}
-                  onChange={(e) =>
-                    setEditContent({ ...editContent, type: e.target.value })
-                  }
-                  className="bg-mainBackgroundColor text-white p-2 rounded"
-                />
-                {/* 将 input 替换为 textarea */}
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={editContent.name}
+                    onChange={(e) =>
+                      setEditContent({ ...editContent, name: e.target.value })
+                    }
+                    className="bg-mainBackgroundColor text-white p-2 rounded flex-1"
+                    placeholder="标题"
+                  />
+                  <select
+                    value={editContent.type}
+                    onChange={(e) =>
+                      setEditContent({ ...editContent, type: e.target.value })
+                    }
+                    className="bg-mainBackgroundColor text-white p-2 rounded min-w-[120px]"
+                  >
+                    {noteTypes.map(type => (
+                      <option key={type.value} value={type.value}>{type.label}</option>
+                    ))}
+                  </select>
+                </div>
                 <textarea
                   value={editContent.content}
                   onChange={(e) =>
                     setEditContent({ ...editContent, content: e.target.value })
                   }
-                  className="bg-mainBackgroundColor text-white p-2 rounded resize-none min-h-[100px] overflow-auto"
+                  className="bg-mainBackgroundColor text-white p-2 rounded resize-none min-h-[100px] max-h-[200px] overflow-auto"
                 />
                 <div className="flex gap-2">
                   <button
@@ -170,13 +201,19 @@ function Notes() {
               // 显示模式
               <>
                 <div className="flex justify-between items-start mb-2">
-                  <span className="text-white font-semibold">{note.type}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-white font-semibold">{note.name}</span>
+                    <span className="text-xs px-2 py-1 rounded bg-mainBackgroundColor text-gray-300">
+                      {noteTypes.find(t => t.value === note.type)?.label || '文本'}
+                    </span>
+                  </div>
                   <div className="flex gap-2">
                     <button
                       onClick={() => {
                         setIsEditing(note.id);
                         setEditContent({
                           type: note.type,
+                          name: note.name,
                           content: note.content,
                         });
                       }}
@@ -192,8 +229,9 @@ function Notes() {
                     </button>
                   </div>
                 </div>
-                {/* 取消截断 */}
-                <p className="text-white mb-2">{note.content}</p>
+                <div className="max-h-[300px] overflow-y-auto">
+                  <p className="text-white mb-2 whitespace-pre-wrap break-words">{note.content}</p>
+                </div>
                 <div className="text-gray-400 text-sm">
                   <p>创建时间: {new Date(note.createTime).toLocaleString()}</p>
                   <p>更新时间: {new Date(note.updateTime).toLocaleString()}</p>
