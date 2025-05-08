@@ -222,7 +222,7 @@ function Notes() {
                       编辑
                     </button>
                     <button
-                      onClick={() => deleteNote(note.id)}
+                      onClick={() => setNotes(notes.filter(n => n.id !== note.id))}
                       className="text-rose-500 hover:text-rose-400"
                     >
                       删除
