@@ -11,6 +11,7 @@ function generateId() {
 const defaultNotes: Note[] = [
   {
     id: "1",
+    name: "test",
     type: "工作",
     content: "完成项目文档",
     createTime: new Date().toISOString(),

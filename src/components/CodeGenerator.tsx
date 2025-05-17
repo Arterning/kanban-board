@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
 
-interface TypeDefinition {
-  name: string;
-  type: string;
-}
 
 const CodeGenerator: React.FC = () => {
   const [input, setInput] = useState('');

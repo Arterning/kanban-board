@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import JsonFormatter from './components/JsonFormatter';
 import TypeScriptSvg from './assets/typescript.svg';
 import JsonSvg from './assets/json.svg';
-import { format } from 'typescript';
 
 // 示例 SVG 图标
 // const JsonSvg = () => (
@@ -12,22 +10,22 @@ import { format } from 'typescript';
 //   </svg>
 // );
 
-const CodeSvg = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-  </svg>
-);
+// const CodeSvg = () => (
+//   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+//     <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+//   </svg>
+// );
 
 // 模拟根据输入的 JSON 生成对应的 TypeScript 类型定义的函数
-const generateTypesFromJson = (json: string) => {
-  try {
-    const parsed = JSON.parse(json);
-    // 这里可以实现具体的生成逻辑
-    return 'Generated TypeScript types will be shown here';
-  } catch (error) {
-    return 'Invalid JSON';
-  }
-};
+// const generateTypesFromJson = (json: string) => {
+//   try {
+//     const parsed = JSON.parse(json);
+//     // 这里可以实现具体的生成逻辑
+//     return 'Generated TypeScript types will be shown here';
+//   } catch (error) {
+//     return 'Invalid JSON';
+//   }
+// };
 
 const ToolPage: React.FC = () => {
   return (
