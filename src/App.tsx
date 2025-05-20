@@ -5,6 +5,7 @@ import JsonFormatter from "./components/JsonFormatter";
 import Notes from "./components/Notes";
 import ToolPage from './ToolPage';
 import CodeGenerator from "./components/CodeGenerator";
+import MarkdownTools from "./components/MarkdownTools";
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
             <Link to="/notes" className="text-white hover:text-rose-500 font-semibold">
               便签
             </Link>
+            <Link to="/markdown-tools" className="text-white hover:text-rose-500 font-semibold">
+              Markdown工具
+            </Link>
           </div>
         </nav>
         
@@ -31,6 +35,7 @@ function App() {
             <Route path="/code-generator" element={<CodeGenerator />} />
             <Route path="/json-formatter" element={<JsonFormatter />} />
             <Route path="/notes" element={<Notes />} />
+            <Route path="/markdown-tools" element={<MarkdownTools />} />
           </Routes>
         </div>
       </div>
