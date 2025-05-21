@@ -6,6 +6,7 @@ import Notes from "./components/Notes";
 import ToolPage from './ToolPage';
 import CodeGenerator from "./components/CodeGenerator";
 import MarkdownTools from "./components/MarkdownTools";
+import Bookmarks from "./components/Bookmarks";
 
 // 创建一个导航组件来使用 useLocation
 const Navigation = () => {
@@ -33,6 +34,9 @@ const Navigation = () => {
         <Link to="/markdown-tools" className={getNavLinkClass('/markdown-tools')}>
           富文本
         </Link>
+        <Link to="/bookmarks" className={getNavLinkClass('/bookmarks')}>
+          书签
+        </Link>
       </div>
     </nav>
   );
@@ -51,6 +55,7 @@ function App() {
             <Route path="/json-formatter" element={<JsonFormatter />} />
             <Route path="/notes" element={<Notes />} />
             <Route path="/markdown-tools" element={<MarkdownTools />} />
+            <Route path="/bookmarks" element={<Bookmarks />} />
           </Routes>
         </div>
       </div>
