@@ -32,6 +32,13 @@ function Bookmarks() {
 
   const [searchTerm, setSearchTerm] = useState('');
 
+  const [isEditing, setIsEditing] = useState<string | null>(null);
+  const [editBookmark, setEditBookmark] = useState({
+    category: '',
+    name: '',
+    url: '',
+  });
+
   useEffect(() => {
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
   }, [bookmarks]);
@@ -51,6 +58,30 @@ function Bookmarks() {
 
   const deleteBookmark = (id: string) => {
     setBookmarks(bookmarks.filter(b => b.id !== id));
+  };
+
+  const startEditing = (bookmark: Bookmark) => {
+    setIsEditing(bookmark.id);
+    setEditBookmark({
+      category: bookmark.category,
+      name: bookmark.name,
+      url: bookmark.url,
+    });
+  };
+
+  const updateBookmark = (id: string) => {
+    if (!editBookmark.name || !editBookmark.url) return;
+
+    setBookmarks(bookmarks.map(bookmark => 
+      bookmark.id === id
+        ? {
+            ...bookmark,
+            ...editBookmark,
+            updateTime: new Date().toISOString(),
+          }
+        : bookmark
+    ));
+    setIsEditing(null);
   };
 
   const filteredBookmarks = bookmarks.filter(bookmark => {
@@ -112,30 +143,80 @@ function Bookmarks() {
           {filteredBookmarks.map((bookmark) => (
             <div
               key={bookmark.id}
-              className="bg-columnBackgroundColor p-3 rounded flex items-center gap-2"
+              className="bg-columnBackgroundColor p-3 rounded flex flex-col gap-2"
             >
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-xs bg-mainBackgroundColor text-gray-300 px-2 py-1 rounded">
-                    {bookmark.category}
-                  </span>
-                  <h3 className="text-white font-medium truncate">{bookmark.name}</h3>
+              {isEditing === bookmark.id ? (
+                // 编辑模式
+                <div className="flex flex-col gap-2">
+                  <input
+                    type="text"
+                    placeholder="分类"
+                    className="bg-mainBackgroundColor text-white p-2 rounded w-full"
+                    value={editBookmark.category}
+                    onChange={(e) => setEditBookmark({ ...editBookmark, category: e.target.value })}
+                  />
+                  <input
+                    type="text"
+                    placeholder="名称"
+                    className="bg-mainBackgroundColor text-white p-2 rounded w-full"
+                    value={editBookmark.name}
+                    onChange={(e) => setEditBookmark({ ...editBookmark, name: e.target.value })}
+                  />
+                  <input
+                    type="url"
+                    placeholder="URL"
+                    className="bg-mainBackgroundColor text-white p-2 rounded w-full"
+                    value={editBookmark.url}
+                    onChange={(e) => setEditBookmark({ ...editBookmark, url: e.target.value })}
+                  />
+                  <div className="flex gap-2 justify-end mt-2">
+                    <button
+                      onClick={() => updateBookmark(bookmark.id)}
+                      className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
+                    >
+                      保存
+                    </button>
+                    <button
+                      onClick={() => setIsEditing(null)}
+                      className="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600"
+                    >
+                      取消
+                    </button>
+                  </div>
                 </div>
-                <a
-                  href={bookmark.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-400 hover:text-blue-300 text-sm truncate block"
-                >
-                  {bookmark.url}
-                </a>
-              </div>
-              <button
-                onClick={() => deleteBookmark(bookmark.id)}
-                className="text-rose-500 hover:text-rose-400"
-              >
-                删除
-              </button>
+              ) : (
+                // 显示模式
+                <>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xs bg-mainBackgroundColor text-gray-300 px-2 py-1 rounded">
+                      {bookmark.category}
+                    </span>
+                    <h3 className="text-white font-medium truncate">{bookmark.name}</h3>
+                  </div>
+                  <a
+                    href={bookmark.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-400 hover:text-blue-300 text-sm truncate block"
+                  >
+                    {bookmark.url}
+                  </a>
+                  <div className="flex justify-end gap-2">
+                    <button
+                      onClick={() => startEditing(bookmark)}
+                      className="text-blue-500 hover:text-blue-400"
+                    >
+                      编辑
+                    </button>
+                    <button
+                      onClick={() => deleteBookmark(bookmark.id)}
+                      className="text-rose-500 hover:text-rose-400"
+                    >
+                      删除
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           ))}
         </div>
