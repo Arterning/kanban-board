@@ -15,7 +15,7 @@ function ImageTags() {
   useEffect(() => {
     const request = indexedDB.open('ImageTagsDB', 1);
 
-    request.onerror = (event) => {
+    request.onerror = () => {  // 移除未使用的 event 参数
       console.error('数据库打开失败');
     };
 
@@ -92,6 +92,17 @@ function ImageTags() {
         />
       </div>
     );
+  };
+
+  // 删除图片
+  const deleteImage = (id: string) => {
+    if (!db) return;
+
+    const transaction = db.transaction(['images'], 'readwrite');
+    const store = transaction.objectStore('images');
+    store.delete(id);
+
+    setImages(images.filter(img => img.id !== id));
   };
 
   return (
