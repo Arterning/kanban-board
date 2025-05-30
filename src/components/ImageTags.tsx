@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 
 interface ImageData {
   id: string;
-  data: string;  // base64 格式的图片数据
+  data: Blob;  // 直接存储 Blob 数据
   createTime: string;
 }
 
 function ImageTags() {
   const [images, setImages] = useState<ImageData[]>([]);
   const [db, setDb] = useState<IDBDatabase | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   // 初始化 IndexedDB
   useEffect(() => {
@@ -54,24 +55,19 @@ function ImageTags() {
           const blob = item.getAsFile();
           if (!blob) continue;
 
-          // 将 Blob 转换为 base64
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            const imageData: ImageData = {
-              id: Math.random().toString(36).substr(2, 9),
-              data: e.target?.result as string,
-              createTime: new Date().toISOString(),
-            };
-
-            // 保存到 IndexedDB
-            const transaction = db.transaction(['images'], 'readwrite');
-            const store = transaction.objectStore('images');
-            store.add(imageData);
-
-            // 更新状态
-            setImages(prev => [imageData, ...prev]);
+          const imageData: ImageData = {
+            id: Math.random().toString(36).substr(2, 9),
+            data: blob,
+            createTime: new Date().toISOString(),
           };
-          reader.readAsDataURL(blob);
+
+          // 保存到 IndexedDB
+          const transaction = db.transaction(['images'], 'readwrite');
+          const store = transaction.objectStore('images');
+          store.add(imageData);
+
+          // 更新状态
+          setImages(prev => [imageData, ...prev]);
         }
       }
     };
@@ -80,19 +76,27 @@ function ImageTags() {
     return () => window.removeEventListener('paste', handlePaste);
   }, [db]);
 
-  // 删除图片
-  const deleteImage = (id: string) => {
-    if (!db) return;
+  // 图片预览弹窗
+  const ImagePreview = () => {
+    if (!previewImage) return null;
 
-    const transaction = db.transaction(['images'], 'readwrite');
-    const store = transaction.objectStore('images');
-    store.delete(id);
-
-    setImages(images.filter(img => img.id !== id));
+    return (
+      <div 
+        className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 cursor-pointer"
+        onClick={() => setPreviewImage(null)}
+      >
+        <img 
+          src={previewImage} 
+          alt="预览图片" 
+          className="max-w-[90%] max-h-[90vh] object-contain"
+        />
+      </div>
+    );
   };
 
   return (
     <div className="container mx-auto p-8">
+      <ImagePreview />
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-white mb-2">图片标签</h1>
         <p className="text-gray-400">按 Ctrl+V 粘贴图片</p>
@@ -103,9 +107,10 @@ function ImageTags() {
           <div key={image.id} className="bg-columnBackgroundColor rounded-lg overflow-hidden">
             <div className="relative group">
               <img
-                src={image.data}
+                src={URL.createObjectURL(image.data)}
                 alt="粘贴的图片"
-                className="w-full h-48 object-cover"
+                className="w-full h-48 object-cover cursor-pointer"
+                onClick={() => setPreviewImage(URL.createObjectURL(image.data))}
               />
               <button
                 onClick={() => deleteImage(image.id)}
