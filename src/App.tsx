@@ -7,6 +7,7 @@ import ToolPage from './ToolPage';
 import CodeGenerator from "./components/CodeGenerator";
 import MarkdownTools from "./components/MarkdownTools";
 import Bookmarks from "./components/Bookmarks";
+import ImageTags from "./components/ImageTags";
 
 // 创建一个导航组件来使用 useLocation
 const Navigation = () => {
@@ -37,6 +38,9 @@ const Navigation = () => {
         <Link to="/bookmarks" className={getNavLinkClass('/bookmarks')}>
           书签
         </Link>
+        <Link to="/image-tags" className={getNavLinkClass('/image-tags')}>
+          图片
+        </Link>
       </div>
     </nav>
   );
@@ -56,6 +60,7 @@ function App() {
             <Route path="/notes" element={<Notes />} />
             <Route path="/markdown-tools" element={<MarkdownTools />} />
             <Route path="/bookmarks" element={<Bookmarks />} />
+            <Route path="/image-tags" element={<ImageTags />} />
           </Routes>
         </div>
       </div>
