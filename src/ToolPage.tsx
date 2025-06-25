@@ -41,7 +41,13 @@ const ToolPage: React.FC = () => {
             <img src={TypeScriptSvg} alt="TypeScript" className="w-12 h-12 mb-4" />
             <h3 className="text-lg font-semibold text-white">Typescript类型生成</h3>
         </Link>
+
+        <Link to="/markdown-tools" className="flex flex-col items-center p-6 bg-columnBackgroundColor rounded-lg shadow-md hover:shadow-lg transition-shadow w-64">
+          <img src={TypeScriptSvg} alt="TypeScript" className="w-12 h-12 mb-4" />
+          <h3 className="text-lg font-semibold text-white">富文本语法</h3>
+        </Link>
         </div>
+        
     </div>
   );
 };

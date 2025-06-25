@@ -9,6 +9,7 @@ import MarkdownTools from "./components/MarkdownTools";
 import Bookmarks from "./components/Bookmarks";
 import ImageTags from "./components/ImageTags";
 import ColorPalette from "./components/ColorPalette";
+import PasswordGenerator from "./components/PasswordGenerator";
 
 // 创建一个导航组件来使用 useLocation
 const Navigation = () => {
@@ -33,9 +34,7 @@ const Navigation = () => {
         <Link to="/notes" className={getNavLinkClass('/notes')}>
           便签
         </Link>
-        <Link to="/markdown-tools" className={getNavLinkClass('/markdown-tools')}>
-          富文本
-        </Link>
+        
         <Link to="/bookmarks" className={getNavLinkClass('/bookmarks')}>
           书签
         </Link>
@@ -44,6 +43,9 @@ const Navigation = () => {
         </Link>
         <Link to="/color-palette" className={getNavLinkClass('/color-palette')}>
           调色板
+        </Link>
+        <Link to="/password-generator" className={getNavLinkClass('/password-generator')}>
+          密码生成
         </Link>
       </div>
     </nav>
@@ -66,6 +68,7 @@ function App() {
             <Route path="/bookmarks" element={<Bookmarks />} />
             <Route path="/image-tags" element={<ImageTags />} />
             <Route path="/color-palette" element={<ColorPalette />} />
+            <Route path="/password-generator" element={<PasswordGenerator />} />
           </Routes>
         </div>
       </div>
