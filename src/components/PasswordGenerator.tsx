@@ -296,7 +296,7 @@ function PasswordGenerator() {
 
             <div className="mt-8">
               <h2 className="text-xl font-bold mb-4">保存密码</h2>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-row gap-2">
                 <input
                   type="text"
                   value={newEntry.name}
