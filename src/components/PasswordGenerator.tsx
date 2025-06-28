@@ -196,6 +196,48 @@ function PasswordGenerator() {
     }
   };
 
+  const exportPasswords = () => {
+    if (!masterPassword) return;
+
+    const transaction = db.transaction(['passwords'], 'readonly');
+    const store = transaction.objectStore('passwords');
+    const request = store.getAll();
+
+    request.onsuccess = () => {
+      const data = JSON.stringify(request.result);
+      const blob = new Blob([data], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'passwords.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    };
+  };
+
+  const importPasswords = async (file: File) => {
+    if (!masterPassword) return;
+
+    try {
+      const data = await file.text();
+      const entries = JSON.parse(data);
+      const transaction = db.transaction(['passwords'], 'readwrite');
+      const store = transaction.objectStore('passwords');
+      entries.forEach((entry: any) => store.add(entry));
+      transaction.oncomplete = () => loadEntries();
+    } catch (error) {
+      console.error('导入失败:', error);
+      alert('导入失败，请检查文件格式。');
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      importPasswords(file);
+    }
+  };
+
   return (
     <div className="container mx-auto p-8">
       {showMasterPasswordInput ? ( 
@@ -229,8 +271,9 @@ function PasswordGenerator() {
       ) : ( 
         <> 
           <h1 className="text-3xl font-bold mb-6">密码生成器</h1>
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
+          
+          <div className="flex-col gap-4">
+            <div className="flex gap-2">
               <label className="text-white">
                 密码长度: {length}
               </label>
@@ -240,11 +283,9 @@ function PasswordGenerator() {
                 max="32"
                 value={length}
                 onChange={(e) => setLength(parseInt(e.target.value))}
-                className="w-full"
+                className="w-1/2"
               />
-            </div>
-
-            <div className="flex gap-4">
+              <div className="flex gap-4">
               <label className="flex items-center gap-2 text-white">
                 <input
                   type="checkbox"
@@ -265,13 +306,17 @@ function PasswordGenerator() {
                 包含特殊字符
               </label>
             </div>
-
             <button
               onClick={generatePassword}
               className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600 transition-colors w-fit"
             >
               生成密码
             </button>
+            </div>
+
+            
+
+            
 
             {password && (
               <div className="flex flex-col gap-2">
@@ -343,6 +388,23 @@ function PasswordGenerator() {
 
             <div className="mt-8">
               <h2 className="text-xl font-bold mb-4">密码管理</h2>
+              <div className="flex gap-4 mb-4">
+              <button
+                onClick={exportPasswords}
+                className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600"
+              >
+                导出密码
+              </button>
+              <label className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600 cursor-pointer">
+                导入密码
+                <input
+                  type="file"
+                  accept=".json"
+                  onChange={handleFileChange}
+                  className="hidden"
+                />
+              </label>
+            </div>
               <table className="w-full border-collapse">
                 <thead>
                   <tr>
