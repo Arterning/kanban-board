@@ -238,6 +238,15 @@ function PasswordGenerator() {
     }
   };
 
+  // 添加删除密码的函数
+  const deleteEntry = (id: number) => {
+    if (!masterPassword) return;
+    const transaction = db.transaction(['passwords'], 'readwrite');
+    const store = transaction.objectStore('passwords');
+    store.delete(id);
+    transaction.oncomplete = () => loadEntries();
+  };
+
   return (
     <div className="container mx-auto p-8">
       {showMasterPasswordInput ? ( 
@@ -442,6 +451,16 @@ function PasswordGenerator() {
                           className="ml-2 text-green-500 hover:text-green-400"
                         >
                           复制
+                        </button>
+                        <button
+                          onClick={() => {
+                            if (window.confirm('确认要删除这个密码项吗？')) {
+                              deleteEntry(entry.id);
+                            }
+                          }}
+                          className="ml-2 text-rose-500 hover:text-rose-400"
+                        >
+                          删除
                         </button>
                       </td>
                     </tr>
