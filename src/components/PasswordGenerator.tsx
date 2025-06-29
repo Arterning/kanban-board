@@ -75,6 +75,15 @@ const resetDatabase = () => {
   });
 };
 
+interface Entry {
+  id: number;
+  name: string;
+  url: string;
+  username: string;
+  password: string;
+  remark: string;
+}
+
 function PasswordGenerator() {
   const [length, setLength] = useState(12);
   const [includeNumbers, setIncludeNumbers] = useState(true);
@@ -90,7 +99,7 @@ function PasswordGenerator() {
     password: "",
     remark: "",
   });
-  const [entries, setEntries] = useState<any[]>([]);
+  const [entries, setEntries] = useState<Entry[]>([]);
   const [viewPasswordId, setViewPasswordId] = useState<number | null>(null);
   const [isNewUser, setIsNewUser] = useState<boolean>(false);
   const [showResetWarning, setShowResetWarning] = useState(false);
@@ -220,7 +229,7 @@ function PasswordGenerator() {
 
     request.onsuccess = () => {
       // 转换字段名
-      const transformedData = request.result.map((entry: any) => ({
+      const transformedData = request.result.map((entry: Entry) => ({
         '1': entry.id,
         '2': entry.name,
         '3': entry.url,
@@ -245,19 +254,19 @@ function PasswordGenerator() {
 
     try {
       const data = await file.text();
-      const entries = JSON.parse(data);
+      const entries  = JSON.parse(data) as Record<string, any>[];
       // 转换回原始字段名
-      const transformedEntries = entries.map((entry: any) => ({
-        id: entry['1'],
-        name: entry['2'],
-        url: entry['3'],
-        username: entry['4'],
-        password: entry['z'],
-        remark: entry['5']
+      const transformedEntries = entries.map((entry: Record<string, any>) => ({
+        id: entry['1'] as number,
+        name: entry['2'] as string,
+        url: entry['3'] as string,
+        username: entry['4'] as string,
+        password: entry['z'] as string,
+        remark: entry['5'] as string
       }));
       const transaction = db.transaction(['passwords'], 'readwrite');
       const store = transaction.objectStore('passwords');
-      transformedEntries.forEach((entry: any) => store.add(entry));
+      transformedEntries.forEach((entry: Entry) => store.add(entry));
       transaction.oncomplete = () => loadEntries();
     } catch (error) {
       console.error('导入失败:', error);
@@ -294,7 +303,7 @@ function PasswordGenerator() {
   });
 
   // 添加编辑函数
-  const startEditing = (entry: any) => {
+  const startEditing = (entry: Entry) => {
     setIsEditing(true);
     setEditingId(entry.id);
     setEditEntry({
