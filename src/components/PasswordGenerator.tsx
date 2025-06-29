@@ -149,8 +149,11 @@ function PasswordGenerator() {
     const transaction = db.transaction(["passwords"], "readwrite");
     const store = transaction.objectStore("passwords");
     const encryptedEntry = {
-      ...newEntry,
+      name: encryptData(newEntry.name),
+      url: encryptData(newEntry.url),
+      username: encryptData(newEntry.username),
       password: encryptData(newEntry.password),
+      remark: encryptData(newEntry.remark),
     };
 
     store.add(encryptedEntry);
@@ -323,6 +326,21 @@ function PasswordGenerator() {
     });
   };
 
+  const [searchQuery, setSearchQuery] = useState('');
+
+
+  // 添加过滤函数
+  const filteredEntries = entries.filter(entry => {
+      const searchText = searchQuery.toLowerCase();
+      const name = decryptData(entry.name).toLowerCase();
+      const url = decryptData(entry.url).toLowerCase();
+      const username = decryptData(entry.username).toLowerCase();
+      const remark = decryptData(entry.remark).toLowerCase();
+
+      return (name.includes(searchText) || url.includes(searchText) || 
+              username.includes(searchText) || remark.includes(searchText));
+  });
+
   return (
     <div className="container mx-auto p-8">
       {showMasterPasswordInput ? (
@@ -480,6 +498,13 @@ function PasswordGenerator() {
 
             <div className="mt-8">
               <h2 className="text-xl font-bold mb-4">密码管理</h2>
+              <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="按名称、URL、用户名或备注搜索"
+                  className="bg-columnBackgroundColor text-white p-2 rounded w-full mb-4"
+              />
               <div className="flex gap-4 mb-4">
                 <button
                   onClick={exportPasswords}
@@ -521,7 +546,7 @@ function PasswordGenerator() {
                   </tr>
                 </thead>
                 <tbody>
-                  {entries.map((entry) => (
+                  {filteredEntries.map((entry) => (
                     <tr key={entry.id}>
                       {isEditing && editingId === entry.id ? (
                         <>
