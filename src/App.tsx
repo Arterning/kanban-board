@@ -45,7 +45,7 @@ const Navigation = () => {
           调色板
         </Link>
         <Link to="/password-generator" className={getNavLinkClass('/password-generator')}>
-          密码生成
+          密码管理
         </Link>
       </div>
     </nav>
