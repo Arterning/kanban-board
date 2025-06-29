@@ -214,21 +214,31 @@ function PasswordGenerator() {
   const exportPasswords = () => {
     if (!masterPassword) return;
 
-    const transaction = db.transaction(["passwords"], "readonly");
-    const store = transaction.objectStore("passwords");
+    const transaction = db.transaction(['passwords'], 'readonly');
+    const store = transaction.objectStore('passwords');
     const request = store.getAll();
 
     request.onsuccess = () => {
-      const data = JSON.stringify(request.result);
-      const blob = new Blob([data], { type: "application/json" });
+      // 转换字段名
+      const transformedData = request.result.map((entry: any) => ({
+        '1': entry.id,
+        '2': entry.name,
+        '3': entry.url,
+        '4': entry.username,
+        'z': entry.password,
+        '5': entry.remark
+      }));
+      const data = JSON.stringify(transformedData);
+      const blob = new Blob([data], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
+      const a = document.createElement('a');
       a.href = url;
-      a.download = "passwords.json";
+      a.download = 'passwords.json';
       a.click();
       URL.revokeObjectURL(url);
     };
   };
+
 
   const importPasswords = async (file: File) => {
     if (!masterPassword) return;
@@ -236,13 +246,22 @@ function PasswordGenerator() {
     try {
       const data = await file.text();
       const entries = JSON.parse(data);
-      const transaction = db.transaction(["passwords"], "readwrite");
-      const store = transaction.objectStore("passwords");
-      entries.forEach((entry: any) => store.add(entry));
+      // 转换回原始字段名
+      const transformedEntries = entries.map((entry: any) => ({
+        id: entry['1'],
+        name: entry['2'],
+        url: entry['3'],
+        username: entry['4'],
+        password: entry['z'],
+        remark: entry['5']
+      }));
+      const transaction = db.transaction(['passwords'], 'readwrite');
+      const store = transaction.objectStore('passwords');
+      transformedEntries.forEach((entry: any) => store.add(entry));
       transaction.oncomplete = () => loadEntries();
     } catch (error) {
-      console.error("导入失败:", error);
-      alert("导入失败，请检查文件格式。");
+      console.error('导入失败:', error);
+      alert('导入失败，请检查文件格式。');
     }
   };
 
