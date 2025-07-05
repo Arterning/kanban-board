@@ -403,13 +403,13 @@ function PasswordGenerator() {
             {isNewUser ? "设置" : "确认"}
           </button>
         </form>
-      ) : (
+      ) : ( 
         <> 
           
 
           {showDialog && (
             <div className="fixed inset-0 flex items-center justify-center z-50">
-              <div className="bg-gray-800 p-6 rounded-lg relative">
+              <div className="bg-gray-800 p-6 rounded-lg relative w-1/2">
                 <button
                   onClick={() => setShowDialog(false)}
                   className="absolute top-2 right-2"
@@ -452,36 +452,36 @@ function PasswordGenerator() {
                     </div>
                     <button
                       onClick={generatePassword}
-                      className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600 transition-colors w-fit"
+                      className="bg-rose-500 text-white px-3 py-1 rounded-lg hover:bg-rose-600 transition-colors w-fit"
                     >
-                      生成密码
+                      生成
                     </button>
                   </div>
 
                   {password && (
-                    <div className="flex flex-col gap-2">
-                      <div className="flex justify-between items-center">
+                    <div className="flex gap-2 mt-3">
+                      {/* <div className="flex justify-between items-center">
                         <label className="text-white">生成的密码：</label>
-                        <button
-                          onClick={() => handleCopy(password)}
-                          className={`px-3 py-1 rounded-lg transition-colors ${
-                            copySuccess
-                              ? "bg-green-500 hover:bg-green-600"
-                              : "bg-rose-500 hover:bg-rose-600"
-                          }`}
-                        >
-                          {copySuccess ? "已复制！" : "复制"}
-                        </button>
-                      </div>
+                      </div> */}
                       <div className="w-full p-4 rounded-lg bg-columnBackgroundColor text-white border border-columnBackgroundColor">
                         {password}
                       </div>
+                      <button
+                        onClick={() => handleCopy(password)}
+                        className={`px-3 py-1 rounded-lg transition-colors ${
+                          copySuccess
+                            ? "bg-green-500 hover:bg-green-600"
+                            : "bg-rose-500 hover:bg-rose-600"
+                        }`}
+                      >
+                        {copySuccess ? "已复制！" : "复制"}
+                      </button>
                     </div>
                   )}
 
                   <div className="mt-8">
                     <h2 className="text-xl font-bold mb-4">保存密码</h2>
-                    <div className="flex flex-col gap-2">
+                    <div className="grid grid-cols-2 gap-2">
                       <input
                         type="text"
                         value={newEntry.name}
@@ -527,16 +527,18 @@ function PasswordGenerator() {
                         placeholder="备注"
                         className="bg-columnBackgroundColor text-white p-2 rounded"
                       />
-                      <button
+                      
+                    </div>
+
+                    <button
                         onClick={() => {
                           saveEntry();
                           setShowDialog(false);
                         }}
-                        className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600 ml-auto"
+                        className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600 ml-auto mt-6"
                       >
                         保存
                       </button>
-                    </div>
                   </div>
                 </div>
               </div>
