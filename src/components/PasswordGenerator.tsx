@@ -103,6 +103,7 @@ function PasswordGenerator() {
   const [viewPasswordId, setViewPasswordId] = useState<number | null>(null);
   const [isNewUser, setIsNewUser] = useState<boolean>(false);
   const [showResetWarning, setShowResetWarning] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
 
   useEffect(() => {
     initDB().then(() => {
@@ -403,129 +404,147 @@ function PasswordGenerator() {
           </button>
         </form>
       ) : (
-        <>
-          <h1 className="text-3xl font-bold mb-6">密码生成器</h1>
+        <> 
+          
 
-          <div className="flex-col gap-4">
-            <div className="flex gap-6 items-center">
-              <label className="text-white">密码长度: {length}</label>
-              <input
-                type="range"
-                min="6"
-                max="32"
-                value={length}
-                onChange={(e) => setLength(parseInt(e.target.value))}
-                className="w-1/2"
-              />
-              <div className="flex gap-4">
-                <label className="flex items-center gap-2 text-white">
-                  <input
-                    type="checkbox"
-                    checked={includeNumbers}
-                    onChange={(e) => setIncludeNumbers(e.target.checked)}
-                    className="form-checkbox h-5 w-5 text-rose-500"
-                  />
-                  包含数字
-                </label>
-
-                <label className="flex items-center gap-2 text-white">
-                  <input
-                    type="checkbox"
-                    checked={includeSpecialChars}
-                    onChange={(e) => setIncludeSpecialChars(e.target.checked)}
-                    className="form-checkbox h-5 w-5 text-rose-500"
-                  />
-                  包含特殊字符
-                </label>
-              </div>
-              <button
-                onClick={generatePassword}
-                className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600 transition-colors w-fit"
-              >
-                生成密码
-              </button>
-            </div>
-
-            {password && (
-              <div className="flex flex-col gap-2">
-                <div className="flex justify-between items-center">
-                  <label className="text-white">生成的密码：</label>
-                  <button
-                    onClick={() => handleCopy(password)}
-                    className={`px-3 py-1 rounded-lg transition-colors ${
-                      copySuccess
-                        ? "bg-green-500 hover:bg-green-600"
-                        : "bg-rose-500 hover:bg-rose-600"
-                    }`}
-                  >
-                    {copySuccess ? "已复制！" : "复制"}
-                  </button>
-                </div>
-                <div className="w-full p-4 rounded-lg bg-columnBackgroundColor text-white border border-columnBackgroundColor">
-                  {password}
-                </div>
-              </div>
-            )}
-
-            <div className="mt-8">
-              <h2 className="text-xl font-bold mb-4">保存密码</h2>
-              <div className="flex flex-row gap-2">
-                <input
-                  type="text"
-                  value={newEntry.name}
-                  onChange={(e) =>
-                    setNewEntry({ ...newEntry, name: e.target.value })
-                  }
-                  placeholder="名称"
-                  className="bg-columnBackgroundColor text-white p-2 rounded"
-                />
-                <input
-                  type="text"
-                  value={newEntry.url}
-                  onChange={(e) =>
-                    setNewEntry({ ...newEntry, url: e.target.value })
-                  }
-                  placeholder="URL"
-                  className="bg-columnBackgroundColor text-white p-2 rounded"
-                />
-                <input
-                  type="text"
-                  value={newEntry.username}
-                  onChange={(e) =>
-                    setNewEntry({ ...newEntry, username: e.target.value })
-                  }
-                  placeholder="用户名"
-                  className="bg-columnBackgroundColor text-white p-2 rounded"
-                />
-                <input
-                  type="password"
-                  value={newEntry.password}
-                  onChange={(e) =>
-                    setNewEntry({ ...newEntry, password: e.target.value })
-                  }
-                  placeholder="密码"
-                  className="bg-columnBackgroundColor text-white p-2 rounded"
-                />
-                <input
-                  type="text"
-                  value={newEntry.remark}
-                  onChange={(e) =>
-                    setNewEntry({ ...newEntry, remark: e.target.value })
-                  }
-                  placeholder="备注"
-                  className="bg-columnBackgroundColor text-white p-2 rounded"
-                />
+          {showDialog && (
+            <div className="fixed inset-0 flex items-center justify-center z-50">
+              <div className="bg-gray-800 p-6 rounded-lg relative">
                 <button
-                  onClick={saveEntry}
-                  className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600 ml-auto"
+                  onClick={() => setShowDialog(false)}
+                  className="absolute top-2 right-2"
                 >
-                  保存
+                  ×
                 </button>
+                
+                <div className="flex-col gap-4">
+                  <h1 className="text-3xl font-bold mb-6">密码生成器</h1>
+                  <div className="flex gap-6 items-center">
+                    <label className="text-white">密码长度: {length}</label>
+                    <input
+                      type="range"
+                      min="6"
+                      max="32"
+                      value={length}
+                      onChange={(e) => setLength(parseInt(e.target.value))}
+                      className="w-1/2"
+                    />
+                    <div className="flex gap-4">
+                      <label className="flex items-center gap-2 text-white">
+                        <input
+                          type="checkbox"
+                          checked={includeNumbers}
+                          onChange={(e) => setIncludeNumbers(e.target.checked)}
+                          className="form-checkbox h-5 w-5 text-rose-500"
+                        />
+                        包含数字
+                      </label>
+
+                      <label className="flex items-center gap-2 text-white">
+                        <input
+                          type="checkbox"
+                          checked={includeSpecialChars}
+                          onChange={(e) => setIncludeSpecialChars(e.target.checked)}
+                          className="form-checkbox h-5 w-5 text-rose-500"
+                        />
+                        包含特殊字符
+                      </label>
+                    </div>
+                    <button
+                      onClick={generatePassword}
+                      className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600 transition-colors w-fit"
+                    >
+                      生成密码
+                    </button>
+                  </div>
+
+                  {password && (
+                    <div className="flex flex-col gap-2">
+                      <div className="flex justify-between items-center">
+                        <label className="text-white">生成的密码：</label>
+                        <button
+                          onClick={() => handleCopy(password)}
+                          className={`px-3 py-1 rounded-lg transition-colors ${
+                            copySuccess
+                              ? "bg-green-500 hover:bg-green-600"
+                              : "bg-rose-500 hover:bg-rose-600"
+                          }`}
+                        >
+                          {copySuccess ? "已复制！" : "复制"}
+                        </button>
+                      </div>
+                      <div className="w-full p-4 rounded-lg bg-columnBackgroundColor text-white border border-columnBackgroundColor">
+                        {password}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="mt-8">
+                    <h2 className="text-xl font-bold mb-4">保存密码</h2>
+                    <div className="flex flex-col gap-2">
+                      <input
+                        type="text"
+                        value={newEntry.name}
+                        onChange={(e) =>
+                          setNewEntry({ ...newEntry, name: e.target.value })
+                        }
+                        placeholder="名称"
+                        className="bg-columnBackgroundColor text-white p-2 rounded"
+                      />
+                      <input
+                        type="text"
+                        value={newEntry.url}
+                        onChange={(e) =>
+                          setNewEntry({ ...newEntry, url: e.target.value })
+                        }
+                        placeholder="URL"
+                        className="bg-columnBackgroundColor text-white p-2 rounded"
+                      />
+                      <input
+                        type="text"
+                        value={newEntry.username}
+                        onChange={(e) =>
+                          setNewEntry({ ...newEntry, username: e.target.value })
+                        }
+                        placeholder="用户名"
+                        className="bg-columnBackgroundColor text-white p-2 rounded"
+                      />
+                      <input
+                        type="password"
+                        value={newEntry.password}
+                        onChange={(e) =>
+                          setNewEntry({ ...newEntry, password: e.target.value })
+                        }
+                        placeholder="密码"
+                        className="bg-columnBackgroundColor text-white p-2 rounded"
+                      />
+                      <input
+                        type="text"
+                        value={newEntry.remark}
+                        onChange={(e) =>
+                          setNewEntry({ ...newEntry, remark: e.target.value })
+                        }
+                        placeholder="备注"
+                        className="bg-columnBackgroundColor text-white p-2 rounded"
+                      />
+                      <button
+                        onClick={() => {
+                          saveEntry();
+                          setShowDialog(false);
+                        }}
+                        className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600 ml-auto"
+                      >
+                        保存
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+          )}
 
-            <div className="mt-8">
-              <h2 className="text-xl font-bold mb-4">密码管理</h2>
+          <div className="mt-8">
+            <h2 className="text-xl font-bold mb-4">密码管理</h2>
               <div className="flex justify-between">
                 <input
                     type="text"
@@ -535,6 +554,12 @@ function PasswordGenerator() {
                     className="bg-columnBackgroundColor text-white p-2 rounded w-1/2 mb-4"
                 />
                   <div className="flex gap-4 mb-4">
+                    <button
+                      onClick={() => setShowDialog(true)}
+                      className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600"
+                    >
+                      新增密码项
+                    </button>
                     <button
                       onClick={exportPasswords}
                       className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600"
@@ -724,7 +749,6 @@ function PasswordGenerator() {
                 </tbody>
               </table>
             </div>
-          </div>
         </>
       )}
       {showResetWarning && (
