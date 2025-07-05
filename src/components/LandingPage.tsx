@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type FeatureCard = {
   id: number;
@@ -19,6 +20,7 @@ type Testimonial = {
 
 export default function LandingPage() {
   const [activeFeature, setActiveFeature] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   const features: FeatureCard[] = [
     {
@@ -79,13 +81,9 @@ export default function LandingPage() {
     },
   ];
 
-  const handleFeatureClick = (id: number) => {
-    setActiveFeature(id);
-    // 在实际应用中，这里会导航到相应的功能模块
-    // console.log(`Navigating to feature ${id}`);
-    // 跳转到path
-
-    
+  const handleFeatureClick = (feature: FeatureCard) => { 
+    setActiveFeature(feature.id);
+    void navigate(feature.path);
   };
 
   return (
@@ -106,9 +104,9 @@ export default function LandingPage() {
               <a href="#" className="text-gray-500 hover:text-gray-700 px-3 py-2 text-sm font-medium">
                 功能
               </a>
-              <a href="#" className="text-gray-500 hover:text-gray-700 px-3 py-2 text-sm font-medium">
+              {/* <a href="#" className="text-gray-500 hover:text-gray-700 px-3 py-2 text-sm font-medium">
                 定价
-              </a>
+              </a> */}
               <button className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700">
                 立即使用
               </button>
@@ -272,7 +270,7 @@ export default function LandingPage() {
               {features.map((feature) => (
                 <div
                   key={feature.id}
-                  onClick={() => handleFeatureClick(feature.id)}
+                  onClick={() => handleFeatureClick(feature)}
                   className={`${feature.bgColor} rounded-lg overflow-hidden shadow transform transition-all hover:scale-105 cursor-pointer ${
                     activeFeature === feature.id ? 'ring-2 ring-indigo-500' : ''
                   }`}
