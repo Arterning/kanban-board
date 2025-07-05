@@ -517,38 +517,40 @@ function PasswordGenerator() {
                 />
                 <button
                   onClick={saveEntry}
-                  className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600"
+                  className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600 ml-auto"
                 >
-                  保存密码
+                  保存
                 </button>
               </div>
             </div>
 
             <div className="mt-8">
               <h2 className="text-xl font-bold mb-4">密码管理</h2>
-              <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="按名称、URL、用户名或备注搜索"
-                  className="bg-columnBackgroundColor text-white p-2 rounded w-full mb-4"
-              />
-              <div className="flex gap-4 mb-4">
-                <button
-                  onClick={exportPasswords}
-                  className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600"
-                >
-                  导出密码
-                </button>
-                <label className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600 cursor-pointer">
-                  导入密码
-                  <input
-                    type="file"
-                    accept=".json"
-                    onChange={handleFileChange}
-                    className="hidden"
-                  />
-                </label>
+              <div className="flex justify-between">
+                <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="按名称、URL、用户名或备注搜索"
+                    className="bg-columnBackgroundColor text-white p-2 rounded w-1/2 mb-4"
+                />
+                  <div className="flex gap-4 mb-4">
+                    <button
+                      onClick={exportPasswords}
+                      className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600"
+                    >
+                      导出密码
+                    </button>
+                    <label className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600 cursor-pointer">
+                      导入密码
+                      <input
+                        type="file"
+                        accept=".json"
+                        onChange={handleFileChange}
+                        className="hidden"
+                      />
+                    </label>
+                </div>
               </div>
               <table className="w-full border-collapse text-center">
                 <thead>
@@ -664,7 +666,7 @@ function PasswordGenerator() {
                             {decryptData(entry.name)}
                           </td>
                           <td className="border border-columnBackgroundColor p-2 text-white">
-                            {decryptData(entry.url)}
+                            <a className="cursor-pointer hover:text-indigo-500" href={decryptData(entry.url)}>{decryptData(entry.url)}</a>
                           </td>
                           <td className="border border-columnBackgroundColor p-2 text-white">
                             {decryptData(entry.username)}
@@ -672,7 +674,7 @@ function PasswordGenerator() {
                           <td className="border border-columnBackgroundColor p-2 text-white">
                             {viewPasswordId === entry.id
                               ? decryptData(entry.password)
-                              : "******"}
+                              : "******************"}
                           </td>
                           <td className="border border-columnBackgroundColor p-2 text-white">
                             {decryptData(entry.remark)}
