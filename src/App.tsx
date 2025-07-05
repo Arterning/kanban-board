@@ -27,7 +27,14 @@ const Navigation = () => {
     <nav className="bg-mainBackgroundColor p-4 border-b border-columnBackgroundColor">
       <div className="container mx-auto flex items-center justify-start gap-6">
         <Link to="/" className={getNavLinkClass('/')}>
-          首页
+          <div className="flex items-center">
+            <div className="flex-shrink-0 flex items-center">
+              <span className="text-xl font-bold text-indigo-200">WorkSuite</span>
+            </div>
+          </div>
+        </Link>
+        <Link to="/kanban" className={getNavLinkClass('/kanban')}>
+          看板
         </Link>
         <Link to="/tools" className={getNavLinkClass('/tools')}>
           工具
