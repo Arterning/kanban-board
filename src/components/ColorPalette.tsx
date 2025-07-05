@@ -30,6 +30,7 @@ const colorSchemes: ColorScheme[] = [
 
 function ColorPalette() {
   const [copiedColor, setCopiedColor] = useState<string | null>(null);
+  const [selectedColor, setSelectedColor] = useState<string>('#000000');
 
   const handleColorClick = async (color: string) => {
     try {
@@ -44,6 +45,16 @@ function ColorPalette() {
   return (
     <div className="container mx-auto p-8">
       <h1 className="text-3xl font-bold text-white mb-6">调色板</h1>
+      <div className="mb-8">
+        <label className="text-white mr-4">选择颜色:</label>
+        <input
+          type="color"
+          value={selectedColor}
+          onChange={(e) => setSelectedColor(e.target.value)}
+          className="cursor-pointer"
+        />
+        <span className="text-white ml-4">当前选择: {selectedColor}</span>
+      </div>
       <div className="space-y-8">
         {colorSchemes.map((scheme) => (
           <div key={scheme.name} className="bg-columnBackgroundColor rounded-lg p-6">
