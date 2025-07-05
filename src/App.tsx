@@ -10,6 +10,7 @@ import Bookmarks from "./components/Bookmarks";
 import ImageTags from "./components/ImageTags";
 import ColorPalette from "./components/ColorPalette";
 import PasswordGenerator from "./components/PasswordGenerator";
+import LandingPage from "./components/LandingPage";
 
 // 创建一个导航组件来使用 useLocation
 const Navigation = () => {
@@ -59,7 +60,8 @@ function App() {
         <Navigation />
         <div className="flex-1">
           <Routes>
-            <Route path="/" element={<KanbanBoard />} />
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/kanban" element={<KanbanBoard />} />
             <Route path="/tools" element={<ToolPage />} />
             <Route path="/code-generator" element={<CodeGenerator />} />
             <Route path="/json-formatter" element={<JsonFormatter />} />
