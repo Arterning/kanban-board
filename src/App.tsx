@@ -12,12 +12,15 @@ import ColorPalette from "./components/ColorPalette";
 import PasswordGenerator from "./components/PasswordGenerator";
 import LandingPage from "./components/LandingPage";
 
+import SvgGallery from "./components/SvgGallery";
+import SvgEditor from "./components/SvgEditor";
+
 // 创建一个导航组件来使用 useLocation
 const Navigation = () => {
   const location = useLocation();
   
   const getNavLinkClass = (path: string) => {
-    const isActive = location.pathname === path;
+    const isActive = location.pathname.startsWith(path);
     return `text-white hover:text-rose-500 font-semibold transition-colors ${
       isActive ? 'text-rose-500 border-b-2 border-rose-500' : ''
     }`;
@@ -55,6 +58,9 @@ const Navigation = () => {
         <Link to="/password-generator" className={getNavLinkClass('/password-generator')}>
           密码管理
         </Link>
+        <Link to="/svg" className={getNavLinkClass('/svg')}>
+          SVG
+        </Link>
       </div>
     </nav>
   );
@@ -78,6 +84,8 @@ function App() {
             <Route path="/image-tags" element={<ImageTags />} />
             <Route path="/color-palette" element={<ColorPalette />} />
             <Route path="/password-generator" element={<PasswordGenerator />} />
+            <Route path="/svg" element={<SvgGallery />} />
+            <Route path="/svg/:id" element={<SvgEditor />} />
           </Routes>
         </div>
       </div>

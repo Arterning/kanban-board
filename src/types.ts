@@ -20,3 +20,10 @@ export interface Note {
   updateTime: string;
   color?: string;
 }
+
+export interface SVG {
+  id: string;
+  name: string;
+  type: string;
+  code: string;
+}
