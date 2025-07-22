@@ -1,8 +1,6 @@
-import React from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../lib/db';
 import { Link } from 'react-router-dom';
-import { SVG } from '../types';
 
 function SvgGallery() {
   const svgs = useLiveQuery(() => db.svgs.toArray(), []);
