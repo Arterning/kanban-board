@@ -122,18 +122,11 @@ const LifeProgress = () => {
 
     return (
         <div className="p-4">
-            <div className="flex justify-center items-center gap-4 mb-4">
-                <button onClick={() => setCurrentYear(y => Math.max(1, y - 1))} disabled={currentYear === 1} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded disabled:bg-gray-600">
-                    Prev Year
-                </button>
-                <div className="text-center">
-                    <p className="text-xl font-bold">Year {currentYear}</p>
-                    <p>Each box is one day. {totalDays - daysPassed} days left in your life.</p>
-                </div>
-                <button onClick={() => setCurrentYear(y => Math.min(LIFE_EXPECTANCY, y + 1))} disabled={currentYear === LIFE_EXPECTANCY} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded disabled:bg-gray-600">
-                    Next Year
-                </button>
+            <div className="text-center my-4">
+                <p className="text-xl font-bold">Year {currentYear}</p>
+                <p>Each box is one day. {totalDays - daysPassed} days left in your life.</p>
             </div>
+            
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {months.map((month, monthIndex) => (
                     <div key={month} className="p-2 bg-gray-800 rounded-lg">
@@ -158,6 +151,16 @@ const LifeProgress = () => {
                         </div>
                     </div>
                 ))}
+            </div>
+
+            <div className="flex justify-between items-center gap-4 mb-4 mt-4">
+                <button onClick={() => setCurrentYear(y => Math.max(1, y - 1))} disabled={currentYear === 1} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded disabled:bg-gray-600">
+                    Prev Year
+                </button>
+                
+                <button onClick={() => setCurrentYear(y => Math.min(LIFE_EXPECTANCY, y + 1))} disabled={currentYear === LIFE_EXPECTANCY} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded disabled:bg-gray-600">
+                    Next Year
+                </button>
             </div>
         </div>
     );
