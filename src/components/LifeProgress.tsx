@@ -110,8 +110,9 @@ const LifeProgress = () => {
   }
 
   const renderGrid = () => {
-    const daysInYear = 365;
-    const yearStartDay = (currentYear - 1) * daysInYear;
+    const yearStartDay = (currentYear - 1) * 365;
+    const months = Array.from({ length: 12 }, (_, i) => i + 1);
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
     const getDayColor = (dayIndex: number) => {
         const year = Math.floor(dayIndex / 365);
@@ -133,19 +134,30 @@ const LifeProgress = () => {
                     Next Year
                 </button>
             </div>
-            <div className="grid grid-cols-30 gap-1" style={{ gridTemplateColumns: 'repeat(30, minmax(0, 1fr))' }}>
-                {Array.from({ length: daysInYear }, (_, i) => {
-                    const dayIndex = yearStartDay + i;
-                    return (
-                        <div
-                            key={i}
-                            className={`w-2 h-2 rounded-sm ${
-                            dayIndex < daysPassed ? getDayColor(dayIndex) : "bg-gray-700"
-                            }`}
-                            title={`Year ${currentYear}, Day ${i + 1}`}
-                        ></div>
-                    );
-                })}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {months.map((month, monthIndex) => (
+                    <div key={month} className="p-2 bg-gray-800 rounded-lg">
+                        <h3 className="text-lg font-semibold text-center mb-2">{monthNames[monthIndex]}</h3>
+                        <div className="grid grid-cols-6 gap-1">
+                            {Array.from({ length: 30 }, (_, dayIndexInMonth) => {
+                                const dayOfYear = monthIndex * 30 + dayIndexInMonth;
+                                const absoluteDayIndex = yearStartDay + dayOfYear;
+                                // Simple check, ignores leap years etc.
+                                if (dayOfYear >= 365) return null; 
+
+                                return (
+                                    <div
+                                        key={dayIndexInMonth}
+                                        className={`w-3 h-3 rounded-sm ${
+                                            absoluteDayIndex < daysPassed ? getDayColor(absoluteDayIndex) : "bg-gray-600"
+                                        }`}
+                                        title={`Year ${currentYear}, Month ${month}, Day ${dayIndexInMonth + 1}`}
+                                    ></div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
     );
