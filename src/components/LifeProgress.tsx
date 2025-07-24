@@ -18,6 +18,14 @@ const LifeProgress = () => {
   );
   const [inputValue, setInputValue] = useState("");
   const [displayYear, setDisplayYear] = useState(new Date().getFullYear());
+  const [now, setNow] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setNow(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     const savedBirthDate = localStorage.getItem("birthDate");
@@ -174,9 +182,31 @@ const LifeProgress = () => {
     );
   };
 
+  const year = now.getFullYear();
+  const month = (now.getMonth() + 1).toString().padStart(2, '0');
+  const day = now.getDate().toString().padStart(2, '0');
+  const hours = now.getHours().toString().padStart(2, '0');
+  const minutes = now.getMinutes().toString().padStart(2, '0');
+  const seconds = now.getSeconds().toString().padStart(2, '0');
+  const timeString = `${year}年-${month}月-${day}日 ${hours}:${minutes}:${seconds}`;
+
+  const secondsPassedToday = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+  const dayProgressPercentage = (secondsPassedToday / 86400) * 100;
+
   return (
     <div className="p-4 bg-gray-900 text-white min-h-screen">
       <h1 className="text-3xl font-bold text-center mb-6">逝者如斯夫，不舍昼夜</h1>
+      
+      <div className="text-center mb-4 max-w-2xl mx-auto">
+        <p className="text-xl font-mono tracking-widest">{timeString}</p>
+        <div className="w-full h-2 bg-gray-700 rounded mt-2 overflow-hidden">
+            <div
+                style={{ width: `${dayProgressPercentage}%` }}
+                className="h-full bg-green-400 rounded"
+            ></div>
+        </div>
+      </div>
+
       <div className="flex justify-center mb-4">
         <button
           onClick={() => setViewMode("progressbar")}
@@ -184,7 +214,7 @@ const LifeProgress = () => {
             viewMode === "progressbar" ? "bg-blue-500" : "bg-gray-700"
           }`}
         >
-          人生进度条
+          人生进度
         </button>
         <button
           onClick={() => setViewMode("grid")}
