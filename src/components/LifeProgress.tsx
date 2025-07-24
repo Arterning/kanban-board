@@ -84,13 +84,13 @@ const LifeProgress = () => {
             <div className="w-full h-8 bg-gray-700 rounded overflow-hidden relative">
                 <div
                     style={{ width: `${totalProgress}%` }}
-                    className={`h-full ${progressColor} transition-width duration-500 ease-in-out`}
+                    className={`h-full ${progressColor} transition-width duration-500 ease-in-out progress-bar-animated`}
                 ></div>
                 <span 
-                    className="absolute top-0 bottom-0 flex items-center justify-center text-xl"
+                    className="absolute top-0 bottom-0 flex items-center justify-center text-xl animate-ping"
                     style={{ left: `${totalProgress}%`, transform: 'translateX(-50%)' }}
                  >
-                    ▼
+                    ❤️
                  </span>
             </div>
             <div className="flex w-full mt-4 text-xs rounded overflow-hidden">
@@ -176,7 +176,7 @@ const LifeProgress = () => {
 
   return (
     <div className="p-4 bg-gray-900 text-white min-h-screen">
-      <h1 className="text-3xl font-bold text-center mb-6">Life Progress</h1>
+      <h1 className="text-3xl font-bold text-center mb-6">逝者如斯夫，不舍昼夜</h1>
       <div className="flex justify-center mb-4">
         <button
           onClick={() => setViewMode("progressbar")}
@@ -184,7 +184,7 @@ const LifeProgress = () => {
             viewMode === "progressbar" ? "bg-blue-500" : "bg-gray-700"
           }`}
         >
-          Progress Bar
+          人生进度条
         </button>
         <button
           onClick={() => setViewMode("grid")}
@@ -192,7 +192,7 @@ const LifeProgress = () => {
             viewMode === "grid" ? "bg-blue-500" : "bg-gray-700"
           }`}
         >
-          Grid
+          人生日历
         </button>
       </div>
       {viewMode === "progressbar" ? renderProgressBar() : renderGrid()}
