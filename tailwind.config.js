@@ -9,6 +9,9 @@ export default {
       colors: {
         "mainBackgroundColor": '#0D1117',
         "columnBackgroundColor": '#161C22'
+      },
+      gridTemplateColumns: {
+        '30': 'repeat(30, minmax(0, 1fr))',
       }
     },
   },

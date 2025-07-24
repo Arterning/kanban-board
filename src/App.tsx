@@ -11,6 +11,7 @@ import ImageTags from "./components/ImageTags";
 import ColorPalette from "./components/ColorPalette";
 import PasswordGenerator from "./components/PasswordGenerator";
 import LandingPage from "./components/LandingPage";
+import LifeProgress from "./components/LifeProgress";
 
 import SvgGallery from "./components/SvgGallery";
 import SvgEditor from "./components/SvgEditor";
@@ -86,6 +87,7 @@ function App() {
             <Route path="/password-generator" element={<PasswordGenerator />} />
             <Route path="/svg" element={<SvgGallery />} />
             <Route path="/svg/:id" element={<SvgEditor />} />
+            <Route path="/life-progress" element={<LifeProgress />} />
           </Routes>
         </div>
       </div>
