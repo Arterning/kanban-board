@@ -20,6 +20,30 @@ const LifeProgress = () => {
   const [displayYear, setDisplayYear] = useState(new Date().getFullYear());
   const [now, setNow] = useState(new Date());
 
+  const stageColorMap: { [key: string]: string } = {
+    "bg-green-200": "#bbf7d0",
+    "bg-green-300": "#86efac",
+    "bg-green-400": "#4ade80",
+    "bg-yellow-400": "#facc15",
+    "bg-orange-400": "#fb923c",
+    "bg-red-500": "#ef4444",
+  };
+
+  const gradientStyle = useMemo(() => {
+    const colorStops = STAGES.map(stage => {
+      const color = stageColorMap[stage.color];
+      const position = (stage.start / LIFE_EXPECTANCY) * 100;
+      return `${color} ${position}%`;
+    }).join(', ');
+
+    const lastStage = STAGES[STAGES.length - 1];
+    const lastColor = stageColorMap[lastStage.color];
+    
+    return {
+      background: `linear-gradient(to right, ${colorStops}, ${lastColor} 100%)`
+    };
+  }, []);
+
   useEffect(() => {
     const timer = setInterval(() => {
       setNow(new Date());
@@ -101,16 +125,21 @@ const LifeProgress = () => {
                     ❤️
                  </span>
             </div>
-            <div className="flex w-full mt-4 text-xs rounded overflow-hidden">
-                {STAGES.map((stage) => {
-                    const stageWidth = ((stage.end - stage.start) / LIFE_EXPECTANCY) * 100;
-                    return (
-                        <div key={stage.name} style={{ width: `${stageWidth}%` }} className="text-center">
-                            <div className={`h-2 ${stage.color} opacity-75`}></div>
-                            <p className="mt-1">{stage.name}</p>
-                        </div>
-                    );
-                })}
+            <div className="w-full mt-4 text-xs">
+                <div 
+                    className="h-2 rounded"
+                    style={gradientStyle}
+                ></div>
+                <div className="flex w-full">
+                    {STAGES.map((stage) => {
+                        const stageWidth = ((stage.end - stage.start) / LIFE_EXPECTANCY) * 100;
+                        return (
+                            <div key={stage.name} style={{ width: `${stageWidth}%` }} className="text-center">
+                                <p className="mt-1">{stage.name}</p>
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );
