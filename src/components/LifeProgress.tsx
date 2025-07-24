@@ -17,7 +17,7 @@ const LifeProgress = () => {
     "progressbar"
   );
   const [inputValue, setInputValue] = useState("");
-  const [currentYear, setCurrentYear] = useState(1);
+  const [displayYear, setDisplayYear] = useState(new Date().getFullYear());
 
   useEffect(() => {
     const savedBirthDate = localStorage.getItem("birthDate");
@@ -26,9 +26,9 @@ const LifeProgress = () => {
     }
   }, []);
 
-  const { age, daysPassed, totalDays, currentStage } = useMemo(() => {
+  const { age, daysPassed, totalDays, currentStage, birthYear } = useMemo(() => {
     if (!birthDate) {
-      return { age: 0, daysPassed: 0, totalDays: 0, currentStage: null };
+      return { age: 0, daysPassed: 0, totalDays: 0, currentStage: null, birthYear: 0 };
     }
     const today = new Date();
     const birth = new Date(birthDate);
@@ -37,14 +37,13 @@ const LifeProgress = () => {
     const totalDaysInLife = LIFE_EXPECTANCY * 365;
     const stage = STAGES.find(s => ageInYears >= s.start && ageInYears <= s.end) || null;
 
-    return { age: ageInYears, daysPassed, totalDays: totalDaysInLife, currentStage: stage };
+    return { age: ageInYears, daysPassed, totalDays: totalDaysInLife, currentStage: stage, birthYear: birth.getFullYear() };
   }, [birthDate]);
 
   useEffect(() => {
-    if (age) {
-      setCurrentYear(Math.floor(age) + 1);
-    }
-  }, [age]);
+    // On birthdate change, reset the calendar to the current actual year
+    setDisplayYear(new Date().getFullYear());
+  }, [birthDate]);
 
 
   if (!birthDate) {
@@ -111,16 +110,6 @@ const LifeProgress = () => {
 
   const renderGrid = () => {
     const birthD = new Date(birthDate!);
-    const birthYear = birthD.getFullYear();
-    const yearForCalc = birthYear + currentYear - 1;
-
-    const isLeap = (year: number) => new Date(year, 1, 29).getDate() === 29;
-
-    let yearStartDay = 0;
-    for (let y = 0; y < currentYear - 1; y++) {
-        yearStartDay += isLeap(birthYear + y) ? 366 : 365;
-    }
-    
     const months = Array.from({ length: 12 }, (_, i) => i);
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -130,38 +119,46 @@ const LifeProgress = () => {
         return stage ? stage.color : 'bg-gray-700';
     }
 
-    let daysPassedInYear = 0;
-
     return (
         <div className="p-4">
             <div className="flex justify-center items-center gap-4 mb-4">
-                <button onClick={() => setCurrentYear(y => Math.max(1, y - 1))} disabled={currentYear === 1} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded disabled:bg-gray-600">
+                <button onClick={() => setDisplayYear(y => y - 1)} disabled={displayYear <= birthYear} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded disabled:bg-gray-600">
                     Prev Year
                 </button>
                 <div className="text-center">
-                    <p className="text-xl font-bold">Year {currentYear} ({yearForCalc})</p>
-                    <p>Each box is one day. {totalDays - daysPassed} days left in your life.</p>
+                    <p className="text-xl font-bold">Year {displayYear - birthYear + 1} ({displayYear})</p>
+                    <p>Each box is one day. {totalDays - daysPassed > 0 ? totalDays - daysPassed : 0} days left.</p>
                 </div>
-                <button onClick={() => setCurrentYear(y => Math.min(LIFE_EXPECTANCY, y + 1))} disabled={currentYear === LIFE_EXPECTANCY} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded disabled:bg-gray-600">
+                <button onClick={() => setDisplayYear(y => y + 1)} disabled={displayYear >= birthYear + LIFE_EXPECTANCY -1} className="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded disabled:bg-gray-600">
                     Next Year
                 </button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {months.map((monthIndex) => {
-                    const daysInMonth = new Date(yearForCalc, monthIndex + 1, 0).getDate();
-                    const monthGrid = Array.from({ length: daysInMonth }, (_, dayIndexInMonth) => {
-                        const absoluteDayIndex = yearStartDay + daysPassedInYear + dayIndexInMonth;
-                        return (
+                    const daysInMonth = new Date(displayYear, monthIndex + 1, 0).getDate();
+                    const firstDayOfMonth = new Date(displayYear, monthIndex, 1);
+                    const startingDayOfWeek = firstDayOfMonth.getDay(); // Sunday = 0, Monday = 1, etc.
+
+                    const monthGrid = [];
+                    // Add blank days for the first week
+                    for (let i = 0; i < startingDayOfWeek; i++) {
+                        monthGrid.push(<div key={`blank-${i}`} className="w-3 h-3"></div>);
+                    }
+
+                    for (let dayIndexInMonth = 1; dayIndexInMonth <= daysInMonth; dayIndexInMonth++) {
+                        const currentDate = new Date(displayYear, monthIndex, dayIndexInMonth);
+                        const absoluteDayIndex = Math.floor((currentDate.getTime() - birthD.getTime()) / (1000 * 60 * 60 * 24));
+                        
+                        monthGrid.push(
                             <div
                                 key={dayIndexInMonth}
                                 className={`w-3 h-3 rounded-sm ${
-                                    absoluteDayIndex < daysPassed ? getDayColor(absoluteDayIndex) : "bg-gray-600"
+                                    absoluteDayIndex >= 0 && absoluteDayIndex < daysPassed ? getDayColor(absoluteDayIndex) : "bg-gray-600"
                                 }`}
-                                title={`Date: ${monthIndex + 1}/${dayIndexInMonth + 1}/${yearForCalc}`}
+                                title={`Date: ${monthIndex + 1}/${dayIndexInMonth}/${displayYear}`}
                             ></div>
                         );
-                    });
-                    daysPassedInYear += daysInMonth;
+                    }
 
                     return (
                         <div key={monthIndex} className="p-2 bg-gray-800 rounded-lg">
