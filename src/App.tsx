@@ -30,12 +30,8 @@ const Navigation = () => {
   return (
     <nav className="bg-mainBackgroundColor p-4 border-b border-columnBackgroundColor">
       <div className="container mx-auto flex items-center justify-start gap-6">
-        <Link to="/" className={getNavLinkClass('/')}>
-          <div className="flex items-center">
-            <div className="flex-shrink-0 flex items-center">
-              <span className="text-xl font-bold text-indigo-200">WorkSuite</span>
-            </div>
-          </div>
+        <Link to="/home" className={getNavLinkClass('/home')}>
+          首页
         </Link>
         <Link to="/kanban" className={getNavLinkClass('/kanban')}>
           看板
@@ -62,6 +58,9 @@ const Navigation = () => {
         <Link to="/svg" className={getNavLinkClass('/svg')}>
           SVG
         </Link>
+        <Link to="/life-progress" className={getNavLinkClass('/life-progress')}>
+          人生进度
+        </Link>
       </div>
     </nav>
   );
@@ -75,6 +74,7 @@ function App() {
         <div className="flex-1">
           <Routes>
             <Route path="/" element={<LandingPage />} />
+            <Route path="/home" element={<LandingPage />} />
             <Route path="/kanban" element={<KanbanBoard />} />
             <Route path="/tools" element={<ToolPage />} />
             <Route path="/code-generator" element={<CodeGenerator />} />
