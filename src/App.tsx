@@ -12,6 +12,7 @@ import ColorPalette from "./components/ColorPalette";
 import PasswordGenerator from "./components/PasswordGenerator";
 import LandingPage from "./components/LandingPage";
 import LifeProgress from "./components/LifeProgress";
+import FileTransfer from "./components/FileTransfer";
 
 import SvgGallery from "./components/SvgGallery";
 import SvgEditor from "./components/SvgEditor";
@@ -61,6 +62,9 @@ const Navigation = () => {
         <Link to="/life-progress" className={getNavLinkClass('/life-progress')}>
           人生进度
         </Link>
+        <Link to="/file-transfer" className={getNavLinkClass('/file-transfer')}>
+          文件传输
+        </Link>
       </div>
     </nav>
   );
@@ -88,6 +92,7 @@ function App() {
             <Route path="/svg" element={<SvgGallery />} />
             <Route path="/svg/:id" element={<SvgEditor />} />
             <Route path="/life-progress" element={<LifeProgress />} />
+            <Route path="/file-transfer" element={<FileTransfer />} />
           </Routes>
         </div>
       </div>
