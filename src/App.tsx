@@ -13,6 +13,7 @@ import PasswordGenerator from "./components/PasswordGenerator";
 import LandingPage from "./components/LandingPage";
 import LifeProgress from "./components/LifeProgress";
 import FileTransfer from "./components/FileTransfer";
+import Base64Converter from './components/Base64Converter';
 
 import SvgGallery from "./components/SvgGallery";
 import SvgEditor from "./components/SvgEditor";
@@ -93,6 +94,7 @@ function App() {
             <Route path="/svg/:id" element={<SvgEditor />} />
             <Route path="/life-progress" element={<LifeProgress />} />
             <Route path="/file-transfer" element={<FileTransfer />} />
+            <Route path="/base64-converter" element={<Base64Converter />} />
           </Routes>
         </div>
       </div>

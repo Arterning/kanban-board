@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import TypeScriptSvg from './assets/typescript.svg';
 import JsonSvg from './assets/json.svg';
 import LifeSvg from './assets/life.svg';
+import Base64Svg from './assets/base64.svg';
 
 // 示例 SVG 图标
 // const JsonSvg = () => (
@@ -50,6 +51,10 @@ const ToolPage: React.FC = () => {
         <Link to="/life-progress" className="flex flex-col items-center p-6 bg-columnBackgroundColor rounded-lg shadow-md hover:shadow-lg transition-shadow w-64">
           <img src={LifeSvg} alt="Life Progress" className="w-12 h-12 mb-4" />
           <h3 className="text-lg font-semibold text-white">人生进度</h3>
+        </Link>
+        <Link to="/base64-converter" className="flex flex-col items-center p-6 bg-columnBackgroundColor rounded-lg shadow-md hover:shadow-lg transition-shadow w-64">
+          <img src={Base64Svg} alt="Base64" className="w-12 h-12 mb-4" />
+          <h3 className="text-lg font-semibold text-white">Base64</h3>
         </Link>
         </div>
         
