@@ -11,6 +11,16 @@ const STAGES = [
   { name: "Mature Adulthood", start: 51, end: LIFE_EXPECTANCY, color: "bg-red-500" },
 ];
 
+const quotes = [
+  "逝者如斯夫，不舍昼夜。",
+  "与买桂花同载酒，终不似，少年游。",
+  "一万年太久，只争朝夕。",
+  "盛年不重来，一日难再晨。",
+  "劝君莫惜金缕衣，劝君惜取少年时。",
+  "明日复明日，明日何其多。我生待明日，万事成蹉跎。",
+  "花有重开日，人无再少年。",
+];
+
 const LifeProgress = () => {
   const [birthDate, setBirthDate] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<"progressbar" | "grid">(
@@ -19,6 +29,14 @@ const LifeProgress = () => {
   const [inputValue, setInputValue] = useState("");
   const [displayYear, setDisplayYear] = useState(new Date().getFullYear());
   const [now, setNow] = useState(new Date());
+  const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
+
+  useEffect(() => {
+    const quoteTimer = setInterval(() => {
+      setCurrentQuoteIndex((prevIndex) => (prevIndex + 1) % quotes.length);
+    }, 5000);
+    return () => clearInterval(quoteTimer);
+  }, []);
 
   const stageColorMap: { [key: string]: string } = {
     "bg-green-200": "#bbf7d0",
@@ -224,7 +242,9 @@ const LifeProgress = () => {
 
   return (
     <div className="p-4 bg-gray-900 text-white min-h-screen">
-      <h1 className="text-3xl font-bold text-center mb-6">逝者如斯夫，不舍昼夜</h1>
+      <h1 className="text-3xl font-bold text-center mb-6 h-10 flex items-center justify-center">
+        {quotes[currentQuoteIndex]}
+      </h1>
       
       <div className="text-center mb-4 max-w-2xl mx-auto">
         <p className="text-xl font-mono tracking-widest">{timeString}</p>
