@@ -13,7 +13,7 @@ const STAGES = [
 
 const quotes = [
   "逝者如斯夫，不舍昼夜。",
-  "与买桂花同载酒，终不似，少年游。",
+  "欲买桂花同载酒，终不似，少年游。",
   "一万年太久，只争朝夕。",
   "盛年不重来，一日难再晨。",
   "劝君莫惜金缕衣，劝君惜取少年时。",
@@ -30,10 +30,15 @@ const LifeProgress = () => {
   const [displayYear, setDisplayYear] = useState(new Date().getFullYear());
   const [now, setNow] = useState(new Date());
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
+  const [isFading, setIsFading] = useState(false);
 
   useEffect(() => {
     const quoteTimer = setInterval(() => {
-      setCurrentQuoteIndex((prevIndex) => (prevIndex + 1) % quotes.length);
+      setIsFading(true);
+      setTimeout(() => {
+        setCurrentQuoteIndex((prevIndex) => (prevIndex + 1) % quotes.length);
+        setIsFading(false);
+      }, 500); // Corresponds to the fade-out duration
     }, 5000);
     return () => clearInterval(quoteTimer);
   }, []);
@@ -242,7 +247,11 @@ const LifeProgress = () => {
 
   return (
     <div className="p-4 bg-gray-900 text-white min-h-screen">
-      <h1 className="text-3xl font-bold text-center mb-6 h-10 flex items-center justify-center">
+      <h1
+        className={`text-3xl font-bold text-center mb-6 h-10 flex items-center justify-center transition-opacity duration-500 ${
+          isFading ? "opacity-0" : "opacity-100"
+        }`}
+      >
         {quotes[currentQuoteIndex]}
       </h1>
       
