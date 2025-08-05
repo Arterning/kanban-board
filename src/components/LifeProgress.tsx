@@ -135,28 +135,35 @@ const LifeProgress = () => {
 
     return (
         <div className="w-full p-4">
-          <h1
-            className={`text-3xl font-bold text-center mb-6 h-10 flex items-center justify-center transition-opacity duration-500 ${
-              isFading ? "opacity-0" : "opacity-100"
-            }`}
-          >
-            {quotes[currentQuoteIndex]}
-          </h1>
-        
-          <div className="text-center mb-4 max-w-2xl mx-auto">
-            <p className="text-xl font-mono tracking-widest">{timeString}</p>
-            <div className="w-full h-2 bg-gray-700 rounded mt-2 overflow-hidden">
-                <div
-                    style={{ width: `${dayProgressPercentage}%` }}
-                    className="h-full bg-green-400 rounded"
-                ></div>
-            </div>
-          </div>
+          
 
-            <div className="text-center mb-4">
-                <p>Your life is {totalProgress.toFixed(2)}% complete.</p>
-                {currentStage && <p>You are in the <span className={`font-bold ${currentStage.color.replace('bg-', 'text-')}`}>{currentStage.name}</span> stage.</p>}
+            <div className="text-center mb-4 max-w-2xl mx-auto">
+              <p className="text-xl font-mono tracking-widest">{timeString}</p>
+              <div className="w-full h-2 bg-gray-700 rounded mt-2 overflow-hidden">
+                  <div
+                      style={{ width: `${dayProgressPercentage}%` }}
+                      className="h-full bg-green-400 rounded"
+                  ></div>
+              </div>
             </div>
+
+            <div className="text-center my-4">
+                <h1
+                  className={`text-3xl font-bold text-center mb-6 h-10 flex items-center justify-center transition-opacity duration-500 ${
+                      isFading ? "opacity-0" : "opacity-100"
+                    }`}
+                  >
+                  {quotes[currentQuoteIndex]}
+                </h1>
+                {/* 配一些图片 */}
+                
+
+
+                <p>您的人生已经走过了 { daysPassed } 天的风风雨雨 </p>
+                <p>按照百分比统计，大概是 {totalProgress.toFixed(2)}% </p>
+                {/* {currentStage && <p>You are in the <span className={`font-bold ${currentStage.color.replace('bg-', 'text-')}`}>{currentStage.name}</span> stage.</p>} */}
+            </div>
+
             <div className="w-full h-8 bg-gray-700 rounded overflow-hidden relative">
                 <div
                     style={{ width: `${totalProgress}%` }}
