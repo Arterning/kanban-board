@@ -72,7 +72,7 @@ const LifeProgress = () => {
         setCurrentQuoteIndex((prevIndex) => (prevIndex + 1) % quotes.length);
         setIsFading(false);
       }, 500); // Corresponds to the fade-out duration
-    }, 5000);
+    }, 3000);
     return () => clearInterval(quoteTimer);
   }, []);
 
@@ -193,8 +193,8 @@ const LifeProgress = () => {
                     className="absolute top-0 left-0 w-full h-full object-cover rounded-lg shadow-lg"
                   />
                 </div>
-                <p>您的人生已经走过了 { daysPassed } 天的风风雨雨 </p>
-                <p>按照百分比统计，大概是 {totalProgress.toFixed(2)}% </p>
+                <p>您已在星河中漫游了 {daysPassed} 个日夜，生命画卷已展开 {totalProgress.toFixed(2)}%。</p>
+                <p>愿您不负韶华，只争朝夕，在未来的每一刻，续写更璀璨的诗篇。</p>
                 {/* {currentStage && <p>You are in the <span className={`font-bold ${currentStage.color.replace('bg-', 'text-')}`}>{currentStage.name}</span> stage.</p>} */}
             </div>
 
