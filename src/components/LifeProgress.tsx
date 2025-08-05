@@ -19,6 +19,9 @@ const quotes = [
   "劝君莫惜金缕衣，劝君惜取少年时。",
   "明日复明日，明日何其多。我生待明日，万事成蹉跎。",
   "花有重开日，人无再少年。",
+  "滴滴答答，就是时时刻刻。是啊，人生有多少时刻呢！",
+  "人生如白驹过隙，忽然而已。",
+  "岁月不待人，时光如流水。",
 ];
 
 const LifeProgress = () => {
@@ -132,6 +135,24 @@ const LifeProgress = () => {
 
     return (
         <div className="w-full p-4">
+          <h1
+            className={`text-3xl font-bold text-center mb-6 h-10 flex items-center justify-center transition-opacity duration-500 ${
+              isFading ? "opacity-0" : "opacity-100"
+            }`}
+          >
+            {quotes[currentQuoteIndex]}
+          </h1>
+        
+          <div className="text-center mb-4 max-w-2xl mx-auto">
+            <p className="text-xl font-mono tracking-widest">{timeString}</p>
+            <div className="w-full h-2 bg-gray-700 rounded mt-2 overflow-hidden">
+                <div
+                    style={{ width: `${dayProgressPercentage}%` }}
+                    className="h-full bg-green-400 rounded"
+                ></div>
+            </div>
+          </div>
+
             <div className="text-center mb-4">
                 <p>Your life is {totalProgress.toFixed(2)}% complete.</p>
                 {currentStage && <p>You are in the <span className={`font-bold ${currentStage.color.replace('bg-', 'text-')}`}>{currentStage.name}</span> stage.</p>}
@@ -247,23 +268,7 @@ const LifeProgress = () => {
 
   return (
     <div className="p-4 bg-gray-900 text-white min-h-screen">
-      <h1
-        className={`text-3xl font-bold text-center mb-6 h-10 flex items-center justify-center transition-opacity duration-500 ${
-          isFading ? "opacity-0" : "opacity-100"
-        }`}
-      >
-        {quotes[currentQuoteIndex]}
-      </h1>
       
-      <div className="text-center mb-4 max-w-2xl mx-auto">
-        <p className="text-xl font-mono tracking-widest">{timeString}</p>
-        <div className="w-full h-2 bg-gray-700 rounded mt-2 overflow-hidden">
-            <div
-                style={{ width: `${dayProgressPercentage}%` }}
-                className="h-full bg-green-400 rounded"
-            ></div>
-        </div>
-      </div>
 
       <div className="flex justify-center mb-4">
         <button
