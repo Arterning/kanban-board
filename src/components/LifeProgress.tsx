@@ -12,16 +12,46 @@ const STAGES = [
 ];
 
 const quotes = [
-  "逝者如斯夫，不舍昼夜。",
-  "欲买桂花同载酒，终不似，少年游。",
-  "一万年太久，只争朝夕。",
-  "盛年不重来，一日难再晨。",
-  "劝君莫惜金缕衣，劝君惜取少年时。",
-  "明日复明日，明日何其多。我生待明日，万事成蹉跎。",
-  "花有重开日，人无再少年。",
-  "滴滴答答，就是时时刻刻。是啊，人生有多少时刻呢！",
-  "人生如白驹过隙，忽然而已。",
-  "岁月不待人，时光如流水。",
+  {
+    text: "逝者如斯夫，不舍昼夜。",
+    imageUrl: "https://images.unsplash.com/photo-1476966502122-c26b7830def9?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGltZSUyMGVsbGFwc2V8ZW58MHx8MHx8fDA%3D"
+  },
+  {
+    text: "欲买桂花同载酒，终不似，少年游。",
+    imageUrl: "https://images.unsplash.com/photo-1695388042140-390890d98b89?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8T3NtYW50aHVzfGVufDB8fDB8fHww"
+  },
+  {
+    text: "一万年太久，只争朝夕。",
+    imageUrl: "https://images.pexels.com/photos/1133957/pexels-photo-1133957.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  },
+  {
+    text: "盛年不重来，一日难再晨。",
+    imageUrl: "https://images.pexels.com/photos/1193743/pexels-photo-1193743.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  },
+  {
+    text: "劝君莫惜金缕衣，劝君惜取少年时。",
+    imageUrl: "https://plus.unsplash.com/premium_photo-1692392182108-e9c8a36a80d9?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Z29sZCUyMHRocmVhZCUyMGNsb3RoaW5nfGVufDB8fDB8fHww"
+  },
+  {
+    text: "明日复明日，明日何其多。我生待明日，万事成蹉跎。",
+    imageUrl: "https://images.pexels.com/photos/7989593/pexels-photo-7989593.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  },
+  {
+    text: "花有重开日，人无再少年。",
+    imageUrl: "https://images.pexels.com/photos/13538569/pexels-photo-13538569.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  },
+  {
+    text: "滴滴答答，就是时时刻刻。是啊，人生有多少时刻呢！",
+    imageUrl: "https://images.pexels.com/photos/1793525/pexels-photo-1793525.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  },
+  {
+    text: "人生如白驹过隙，忽然而已。",
+    imageUrl: "https://images.pexels.com/photos/1996333/pexels-photo-1996333.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  },
+  {
+    text: "岁月不待人，时光如流水。",
+    imageUrl: "https://images.pexels.com/photos/326240/pexels-photo-326240.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  },
 ];
 
 const LifeProgress = () => {
@@ -153,12 +183,16 @@ const LifeProgress = () => {
                       isFading ? "opacity-0" : "opacity-100"
                     }`}
                   >
-                  {quotes[currentQuoteIndex]}
+                  {quotes[currentQuoteIndex].text}
                 </h1>
-                {/* 配一些图片 */}
-                
-
-
+                <div className={`relative w-full max-w-2xl mx-auto h-64 mb-6 transition-opacity duration-500 ${isFading ? "opacity-0" : "opacity-100"}`}>
+                  <img
+                    key={currentQuoteIndex}
+                    src={quotes[currentQuoteIndex].imageUrl}
+                    alt={quotes[currentQuoteIndex].text}
+                    className="absolute top-0 left-0 w-full h-full object-cover rounded-lg shadow-lg"
+                  />
+                </div>
                 <p>您的人生已经走过了 { daysPassed } 天的风风雨雨 </p>
                 <p>按照百分比统计，大概是 {totalProgress.toFixed(2)}% </p>
                 {/* {currentStage && <p>You are in the <span className={`font-bold ${currentStage.color.replace('bg-', 'text-')}`}>{currentStage.name}</span> stage.</p>} */}
