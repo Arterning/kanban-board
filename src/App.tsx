@@ -16,6 +16,7 @@ import FileTransfer from "./components/FileTransfer";
 import Base64Converter from './components/Base64Converter';
 import Base32Converter from './components/Base32Converter';
 import UrlConverter from './components/UrlConverter';
+import AESConverter from './components/AESConverter';
 
 import SvgGallery from "./components/SvgGallery";
 import SvgEditor from "./components/SvgEditor";
@@ -99,6 +100,7 @@ function App() {
             <Route path="/base64-converter" element={<Base64Converter />} />
             <Route path="/base32-converter" element={<Base32Converter />} />
             <Route path="/url-converter" element={<UrlConverter />} />
+            <Route path="/aes-converter" element={<AESConverter />} />
           </Routes>
         </div>
       </div>
