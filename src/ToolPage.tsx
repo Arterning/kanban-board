@@ -48,6 +48,10 @@ const ToolPage: React.FC = () => {
           <ShieldCheckIcon className="w-12 h-12 mb-4 text-white" />
           <h3 className="text-lg font-semibold text-white">SHA-256</h3>
         </Link>
+        <Link to="/rsa-converter" className="flex flex-col items-center p-6 bg-columnBackgroundColor rounded-lg shadow-md hover:shadow-lg transition-shadow w-64">
+          <ShieldCheckIcon className="w-12 h-12 mb-4 text-white" />
+          <h3 className="text-lg font-semibold text-white">RSA</h3>
+        </Link>
         </div>
         
     </div>

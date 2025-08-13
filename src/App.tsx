@@ -18,6 +18,7 @@ import Base32Converter from './components/Base32Converter';
 import UrlConverter from './components/UrlConverter';
 import AESConverter from './components/AESConverter';
 import SHA256Hasher from './components/SHA256Hasher';
+import RSAConverter from './components/RSAConverter';
 
 import SvgGallery from "./components/SvgGallery";
 import SvgEditor from "./components/SvgEditor";
@@ -103,6 +104,7 @@ function App() {
             <Route path="/url-converter" element={<UrlConverter />} />
             <Route path="/aes-converter" element={<AESConverter />} />
             <Route path="/sha256-hasher" element={<SHA256Hasher />} />
+            <Route path="/rsa-converter" element={<RSAConverter />} />
           </Routes>
         </div>
       </div>
