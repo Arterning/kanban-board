@@ -14,6 +14,7 @@ import LandingPage from "./components/LandingPage";
 import LifeProgress from "./components/LifeProgress";
 import FileTransfer from "./components/FileTransfer";
 import Base64Converter from './components/Base64Converter';
+import Base32Converter from './components/Base32Converter';
 
 import SvgGallery from "./components/SvgGallery";
 import SvgEditor from "./components/SvgEditor";
@@ -95,6 +96,7 @@ function App() {
             <Route path="/life-progress" element={<LifeProgress />} />
             <Route path="/file-transfer" element={<FileTransfer />} />
             <Route path="/base64-converter" element={<Base64Converter />} />
+            <Route path="/base32-converter" element={<Base32Converter />} />
           </Routes>
         </div>
       </div>
