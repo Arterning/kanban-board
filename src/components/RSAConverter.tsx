@@ -13,7 +13,7 @@ const RSAConverter: React.FC = () => {
   const handleGenerateKeys = () => {
     setIsGenerating(true);
     setTimeout(() => {
-      const crypt = new JSEncrypt({ default_key_size: 2048 });
+      const crypt = new JSEncrypt({ default_key_size: '2048' });
       setPrivateKey(crypt.getPrivateKey());
       setPublicKey(crypt.getPublicKey());
       setIsGenerating(false);
