@@ -60,6 +60,10 @@ const ToolPage: React.FC = () => {
           <img src={Base64Svg} alt="Base32" className="w-12 h-12 mb-4" />
           <h3 className="text-lg font-semibold text-white">Base32</h3>
         </Link>
+        <Link to="/url-converter" className="flex flex-col items-center p-6 bg-columnBackgroundColor rounded-lg shadow-md hover:shadow-lg transition-shadow w-64">
+          <img src={Base64Svg} alt="URL" className="w-12 h-12 mb-4" />
+          <h3 className="text-lg font-semibold text-white">URL</h3>
+        </Link>
         </div>
         
     </div>
