@@ -68,6 +68,10 @@ const ToolPage: React.FC = () => {
           <img src={Base64Svg} alt="AES" className="w-12 h-12 mb-4" />
           <h3 className="text-lg font-semibold text-white">AES</h3>
         </Link>
+        <Link to="/sha256-hasher" className="flex flex-col items-center p-6 bg-columnBackgroundColor rounded-lg shadow-md hover:shadow-lg transition-shadow w-64">
+          <img src={Base64Svg} alt="SHA-256" className="w-12 h-12 mb-4" />
+          <h3 className="text-lg font-semibold text-white">SHA-256</h3>
+        </Link>
         </div>
         
     </div>
