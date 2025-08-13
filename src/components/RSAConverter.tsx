@@ -8,11 +8,16 @@ const RSAConverter: React.FC = () => {
   const [encryptedText, setEncryptedText] = useState<string>('');
   const [textToDecrypt, setTextToDecrypt] = useState<string>('');
   const [decryptedText, setDecryptedText] = useState<string>('');
+  const [isGenerating, setIsGenerating] = useState<boolean>(false);
 
   const handleGenerateKeys = () => {
-    const crypt = new JSEncrypt({ default_key_size: 2048 });
-    setPrivateKey(crypt.getPrivateKey());
-    setPublicKey(crypt.getPublicKey());
+    setIsGenerating(true);
+    setTimeout(() => {
+      const crypt = new JSEncrypt({ default_key_size: 2048 });
+      setPrivateKey(crypt.getPrivateKey());
+      setPublicKey(crypt.getPublicKey());
+      setIsGenerating(false);
+    }, 6);
   };
 
   const handleEncrypt = () => {
@@ -52,9 +57,10 @@ const RSAConverter: React.FC = () => {
       <div className="text-center mb-6">
         <button
           onClick={handleGenerateKeys}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:bg-blue-400"
+          disabled={isGenerating}
         >
-          Generate 2048-bit RSA Key Pair
+          {isGenerating ? 'Generating...' : 'Generate 2048-bit RSA Key Pair'}
         </button>
       </div>
 
