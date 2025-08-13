@@ -13,6 +13,7 @@
     "@dnd-kit/core": "^6.0.8",
     "@dnd-kit/sortable": "^7.0.2",
     "@dnd-kit/utilities": "^3.2.2",
+    "@heroicons/react": "^2.2.0",
     "crypto-js": "^4.2.0",
     "dexie": "^4.0.11",
     "dexie-react-hooks": "^1.1.7",

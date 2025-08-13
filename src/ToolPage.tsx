@@ -3,31 +3,7 @@ import { Link } from 'react-router-dom';
 import TypeScriptSvg from './assets/typescript.svg';
 import JsonSvg from './assets/json.svg';
 import LifeSvg from './assets/life.svg';
-import Base64Svg from './assets/base64.svg';
-
-// 示例 SVG 图标
-// const JsonSvg = () => (
-//   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-//     <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
-//   </svg>
-// );
-
-// const CodeSvg = () => (
-//   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-//     <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-//   </svg>
-// );
-
-// 模拟根据输入的 JSON 生成对应的 TypeScript 类型定义的函数
-// const generateTypesFromJson = (json: string) => {
-//   try {
-//     const parsed = JSON.parse(json);
-//     // 这里可以实现具体的生成逻辑
-//     return 'Generated TypeScript types will be shown here';
-//   } catch (error) {
-//     return 'Invalid JSON';
-//   }
-// };
+import { DocumentTextIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
 
 const ToolPage: React.FC = () => {
   return (
@@ -45,7 +21,7 @@ const ToolPage: React.FC = () => {
         </Link>
 
         <Link to="/markdown-tools" className="flex flex-col items-center p-6 bg-columnBackgroundColor rounded-lg shadow-md hover:shadow-lg transition-shadow w-64">
-          <img src={TypeScriptSvg} alt="TypeScript" className="w-12 h-12 mb-4" />
+          <DocumentTextIcon className="w-12 h-12 mb-4 text-white" />
           <h3 className="text-lg font-semibold text-white">富文本语法</h3>
         </Link>
         <Link to="/life-progress" className="flex flex-col items-center p-6 bg-columnBackgroundColor rounded-lg shadow-md hover:shadow-lg transition-shadow w-64">
@@ -53,23 +29,23 @@ const ToolPage: React.FC = () => {
           <h3 className="text-lg font-semibold text-white">人生进度</h3>
         </Link>
         <Link to="/base64-converter" className="flex flex-col items-center p-6 bg-columnBackgroundColor rounded-lg shadow-md hover:shadow-lg transition-shadow w-64">
-          <img src={Base64Svg} alt="Base64" className="w-12 h-12 mb-4" />
+          <ShieldCheckIcon className="w-12 h-12 mb-4 text-white" />
           <h3 className="text-lg font-semibold text-white">Base64</h3>
         </Link>
         <Link to="/base32-converter" className="flex flex-col items-center p-6 bg-columnBackgroundColor rounded-lg shadow-md hover:shadow-lg transition-shadow w-64">
-          <img src={Base64Svg} alt="Base32" className="w-12 h-12 mb-4" />
+          <ShieldCheckIcon className="w-12 h-12 mb-4 text-white" />
           <h3 className="text-lg font-semibold text-white">Base32</h3>
         </Link>
         <Link to="/url-converter" className="flex flex-col items-center p-6 bg-columnBackgroundColor rounded-lg shadow-md hover:shadow-lg transition-shadow w-64">
-          <img src={Base64Svg} alt="URL" className="w-12 h-12 mb-4" />
+          <ShieldCheckIcon className="w-12 h-12 mb-4 text-white" />
           <h3 className="text-lg font-semibold text-white">URL</h3>
         </Link>
         <Link to="/aes-converter" className="flex flex-col items-center p-6 bg-columnBackgroundColor rounded-lg shadow-md hover:shadow-lg transition-shadow w-64">
-          <img src={Base64Svg} alt="AES" className="w-12 h-12 mb-4" />
+          <ShieldCheckIcon className="w-12 h-12 mb-4 text-white" />
           <h3 className="text-lg font-semibold text-white">AES</h3>
         </Link>
         <Link to="/sha256-hasher" className="flex flex-col items-center p-6 bg-columnBackgroundColor rounded-lg shadow-md hover:shadow-lg transition-shadow w-64">
-          <img src={Base64Svg} alt="SHA-256" className="w-12 h-12 mb-4" />
+          <ShieldCheckIcon className="w-12 h-12 mb-4 text-white" />
           <h3 className="text-lg font-semibold text-white">SHA-256</h3>
         </Link>
         </div>
