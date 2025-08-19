@@ -87,9 +87,9 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen ">
       {/* 导航栏 */}
-      <nav className="bg-gray-900 shadow-sm">
+      <nav className=" shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             
@@ -112,13 +112,13 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero 区域 */}
-      <div className="bg-gray-900">
+      <div className="">
         <div className="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
-            <span className="block text-indigo-200">简单、安全、高效</span>
-            <span className="block text-indigo-600">您的一站式工作平台</span>
+            {/* <span className="block text-indigo-200">简单、安全、高效</span> */}
+            <span className="block text-indigo-600">简单、安全、高效的一站式工作平台</span>
           </h1>
-          <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+          <p className="mt-6 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-2xl md:max-w-3xl">
             无需登录即可使用，所有数据安全加密存储，让您的工作更加轻松高效。
           </p>
           {/* <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
@@ -143,16 +143,16 @@ export default function LandingPage() {
       </div>
 
       {/* 核心优势 */}
-      <div className="bg-gray-900 py-12">
+      <div className=" py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:text-center">
-            <h2 className="text-2xl text-indigo-600 font-semibold tracking-wide uppercase">优势</h2>
-            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+            <p className="text-3xl sm:text-4xl text-indigo-600 mt-2 text-3xl leading-8 font-extrabold tracking-tight">优势</p>
+            {/* <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
               为什么选择我们
             </p>
             <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
               我们重新定义了工作效率工具的标准
-            </p>
+            </p> */}
           </div>
 
           <div className="mt-10">
@@ -252,13 +252,16 @@ export default function LandingPage() {
       <div className="py-12 bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:text-center">
-            <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">功能</h2>
-            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+            {/* <p className="text-base text-3xl text-indigo-600 font-semibold tracking-wide uppercase">功能</p> */}
+            {/* <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
               一站式解决您的工作需求
+            </p> */}
+            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-indigo-600 sm:text-4xl">
+              功能
             </p>
-            <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+            {/* <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
               点击卡片立即体验各项功能
-            </p>
+            </p> */}
           </div>
 
           <div className="mt-10">
@@ -284,12 +287,15 @@ export default function LandingPage() {
       </div>
 
       {/* 用户评价 */}
-      <div className="bg-gray-900 py-12">
+      <div className=" py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:text-center mb-12">
-            <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">评价</h2>
+            {/* <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">评价</h2>
             <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
               用户怎么说
+            </p> */}
+            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-indigo-600 sm:text-4xl">
+              评价
             </p>
           </div>
 
@@ -311,7 +317,7 @@ export default function LandingPage() {
       </div>
 
       {/* CTA 区域 */}
-      <div className="bg-gray-900">
+      <div className="">
         <div className="max-w-2xl mx-auto text-center py-16 px-4 sm:py-20 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
             <span className="block">准备好提升您的工作效率了吗？</span>
@@ -330,9 +336,9 @@ export default function LandingPage() {
       </div>
 
       {/* 页脚 */}
-      <footer className="bg-gray-800">
+      <footer className="">
         <div className="max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
-          <nav className="-mx-5 -my-2 flex flex-wrap justify-center" aria-label="Footer">
+          {/* <nav className="-mx-5 -my-2 flex flex-wrap justify-center" aria-label="Footer">
             <div className="px-5 py-2">
               <a href="#" className="text-base text-gray-500 hover:text-gray-900">
                 关于
@@ -358,7 +364,7 @@ export default function LandingPage() {
                 条款
               </a>
             </div>
-          </nav>
+          </nav> */}
           <p className="mt-8 text-center text-base text-gray-400">
             &copy; 2023 WorkSuite. 保留所有权利。
           </p>
