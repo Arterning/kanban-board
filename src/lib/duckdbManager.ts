@@ -103,7 +103,14 @@ export async function executeQuery(sql: string): Promise<{
       columns.forEach((col) => {
         // 使用get方法从Arrow Table中获取值
         const column = arrowTable.getChild(col);
-        obj[col] = column?.get(i);
+        let value = column?.get(i);
+
+        // 将BigInt转换为普通数字
+        if (typeof value === 'bigint') {
+          value = Number(value);
+        }
+
+        obj[col] = value;
       });
       data.push(obj);
     }

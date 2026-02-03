@@ -44,7 +44,9 @@ export default function QueryResultChart({ data, columns }: QueryResultChartProp
     if (data.length === 0) return [];
     return columns.filter(col => {
       const value = data[0][col];
-      return !isNaN(Number(value)) && typeof value !== 'string';
+      // 检查是否为数字类型（包括number和可转换的字符串）
+      const numValue = Number(value);
+      return !isNaN(numValue) && value !== null && value !== undefined && value !== '';
     });
   }, [data, columns]);
 
