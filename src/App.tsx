@@ -19,6 +19,8 @@ import UrlConverter from './components/UrlConverter';
 import AESConverter from './components/AESConverter';
 import SHA256Hasher from './components/SHA256Hasher';
 import RSAConverter from './components/RSAConverter';
+import CSVManager from './components/CSVManager';
+import CSVViewer from './components/CSVViewer';
 
 import SvgGallery from "./components/SvgGallery";
 import SvgEditor from "./components/SvgEditor";
@@ -71,6 +73,9 @@ const Navigation = () => {
         <Link to="/file-transfer" className={getNavLinkClass('/file-transfer')}>
           文件传输
         </Link>
+        <Link to="/csv" className={getNavLinkClass('/csv')}>
+          表格
+        </Link>
       </div>
     </nav>
   );
@@ -105,6 +110,8 @@ function App() {
             <Route path="/aes-converter" element={<AESConverter />} />
             <Route path="/sha256-hasher" element={<SHA256Hasher />} />
             <Route path="/rsa-converter" element={<RSAConverter />} />
+            <Route path="/csv" element={<CSVManager />} />
+            <Route path="/csv/:id" element={<CSVViewer />} />
           </Routes>
         </div>
       </div>
