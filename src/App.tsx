@@ -21,6 +21,7 @@ import SHA256Hasher from './components/SHA256Hasher';
 import RSAConverter from './components/RSAConverter';
 import CSVManager from './components/CSVManager';
 import CSVViewer from './components/CSVViewer';
+import Writing from './components/Writing';
 
 import SvgGallery from "./components/SvgGallery";
 import SvgEditor from "./components/SvgEditor";
@@ -76,6 +77,9 @@ const Navigation = () => {
         <Link to="/csv" className={getNavLinkClass('/csv')}>
           表格
         </Link>
+        <Link to="/writing" className={getNavLinkClass('/writing')}>
+          写作
+        </Link>
       </div>
     </nav>
   );
@@ -112,6 +116,7 @@ function App() {
             <Route path="/rsa-converter" element={<RSAConverter />} />
             <Route path="/csv" element={<CSVManager />} />
             <Route path="/csv/:id" element={<CSVViewer />} />
+            <Route path="/writing" element={<Writing />} />
           </Routes>
         </div>
       </div>
