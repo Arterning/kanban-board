@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import TypeScriptSvg from './assets/typescript.svg';
 import JsonSvg from './assets/json.svg';
 import LifeSvg from './assets/life.svg';
-import { DocumentTextIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
+import { DocumentTextIcon, ShieldCheckIcon, SparklesIcon } from '@heroicons/react/24/outline';
 
 const ToolPage: React.FC = () => {
   return (
@@ -51,6 +51,10 @@ const ToolPage: React.FC = () => {
         <Link to="/rsa-converter" className="flex flex-col items-center p-6 bg-columnBackgroundColor rounded-lg shadow-md hover:shadow-lg transition-shadow w-64">
           <ShieldCheckIcon className="w-12 h-12 mb-4 text-white" />
           <h3 className="text-lg font-semibold text-white">RSA</h3>
+        </Link>
+        <Link to="/llm-to-notion" className="flex flex-col items-center p-6 bg-columnBackgroundColor rounded-lg shadow-md hover:shadow-lg transition-shadow w-64">
+          <SparklesIcon className="w-12 h-12 mb-4 text-white" />
+          <h3 className="text-lg font-semibold text-white">LLM to Notion</h3>
         </Link>
         </div>
         

@@ -22,6 +22,7 @@ import RSAConverter from './components/RSAConverter';
 import CSVManager from './components/CSVManager';
 import CSVViewer from './components/CSVViewer';
 import Writing from './components/Writing';
+import LLMToNotion from './components/LLMToNotion';
 
 import SvgGallery from "./components/SvgGallery";
 import SvgEditor from "./components/SvgEditor";
@@ -117,6 +118,7 @@ function App() {
             <Route path="/csv" element={<CSVManager />} />
             <Route path="/csv/:id" element={<CSVViewer />} />
             <Route path="/writing" element={<Writing />} />
+            <Route path="/llm-to-notion" element={<LLMToNotion />} />
           </Routes>
         </div>
       </div>
